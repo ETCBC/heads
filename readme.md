@@ -1,7 +1,5 @@
 # Heads
 
-**NB: This repo is currently under construction. The heads features will be delivered soon. -Cody 14 Dec 2018**
-
 ## Features
 
 The project produces the following features:
