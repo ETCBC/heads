@@ -17,7 +17,7 @@ The project produces the following features:
 
 
 ### Caution
-There are mistakes in version 2017 due to mistakes in the encoding related to the `adjv` part of speech when used with כל (should be `subs` as it is in 2018 data. These mistakes are not worth fixing since better data is available.
+There are accidents in head data for version 2017 due to mistakes in the encoding related to the `adjv` part of speech when used with כל (should be `subs` as it is in 2018 data. These mistakes are not worth fixing since better data is available.
 
 ## Production
 
