@@ -19,6 +19,8 @@ This project produces the following features:
 ### Caution
 There are accidents in head data for version 2017 due to mistakes in the encoding related to the `adjv` part of speech when used with כל (should be `subs` as it is in 2018 data). These mistakes are not worth fixing since better data is available.
 
+[![DOI](https://zenodo.org/badge/161826530.svg)](https://zenodo.org/badge/latestdoi/161826530)
+
 ## Production
 
 The features are produced by two mostly identical notebooks: [phrase_heads.ipynb](phrase_heads.ipynb) and phrase_atom_heads.ipynb (to follow later). These notebooks are run against BHSA version `c` and BHSA `2017`. The choice to keep production within Jupyter notebooks is a strategic one. The heads feature will not be complete until the subphrase data model is fixed. This is because the data model behind subphrases suffers problems of incompleteness and inconsistency (see explanations below). While the vast majority of issues with heads has been solved, there will need to be continuous corrections, experimentation, and improvements. Furthermore, the in-depth analysis of these notebooks will be useful when underlying data changes in successive updates. Thus, it would be a mistake to hide the heads production in a .py script. For the time being, the production code should live together with the analysis and interactions available in a Jupyter notebook. The production of phrase_atom heads requires some modifications to the templates, and phrase_atoms present a whole new set of unique situations to account for.  
