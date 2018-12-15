@@ -19,7 +19,13 @@ This project produces the following features:
 ### Caution
 There are accidents in head data for version 2017 due to mistakes in the encoding related to the `adjv` part of speech when used with כל (should be `subs` as it is in 2018 data). These mistakes are not worth fixing since better data is available.
 
+<br>
+<br>
+
 [![DOI](https://zenodo.org/badge/161826530.svg)](https://zenodo.org/badge/latestdoi/161826530)
+
+<hr>
+<br>
 
 ## Production
 
