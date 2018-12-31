@@ -5,7 +5,7 @@
 @source=see the creation notebooks at https://github.com/etcbc/heads
 @valueType=str
 @writtenBy=Text-Fabric
-@dateWritten=2018-12-31T12:08:39Z
+@dateWritten=2018-12-31T14:47:36Z
 
 prep
 5	prep
@@ -5668,6 +5668,7 @@ quant
 27286	prep
 27289	prep
 27293	prep
+prep
 27299	prep
 27306	prep
 27313	prep
@@ -5787,6 +5788,7 @@ prep
 27787	prep
 prep
 27791	prep
+prep
 prep
 27803	prep
 27813	quant
@@ -8068,6 +8070,7 @@ prep
 38324	prep
 38329	prep
 38334	prep
+prep
 38342	prep
 38347	prep
 38350	prep
@@ -8320,8 +8323,10 @@ prep
 39476	prep
 39481	prep
 39484	prep
+prep
 39491	prep
 39493	prep
+prep
 39503	prep
 39507	prep
 39512	prep
@@ -8813,6 +8818,7 @@ prep
 prep
 41941	prep
 41944	prep
+prep
 41948	prep
 41955	prep
 prep
@@ -10254,6 +10260,7 @@ quant
 47805	prep
 47810	prep
 47812	prep
+prep
 47820	prep
 47826	prep
 quant
@@ -17266,6 +17273,7 @@ prep
 76398	prep
 76402	prep
 76405	prep
+prep
 76410	prep
 76412	prep
 76415	prep
@@ -17841,6 +17849,7 @@ prep
 quant
 79203	prep
 79208	prep
+prep
 79212	prep
 79217	prep
 79232	prep
@@ -17855,6 +17864,7 @@ prep
 79277	prep
 79280	prep
 79282	prep
+prep
 79294	prep
 79307	prep
 79316	prep
@@ -18801,6 +18811,7 @@ prep
 83088	prep
 prep
 83096	prep
+prep
 83105	prep
 83110	quant
 83118	prep
@@ -19156,6 +19167,7 @@ quant
 84810	prep
 84815	prep
 84833	prep
+prep
 84838	prep
 84843	prep
 84847	prep
@@ -19273,6 +19285,7 @@ prep
 85439	prep
 85449	prep
 85451	prep
+prep
 85496	prep
 85501	prep
 85509	quant
@@ -19747,6 +19760,7 @@ quant
 87499	prep
 87501	prep
 87508	prep
+prep
 87513	prep
 87518	quant
 87521	quant
@@ -20081,6 +20095,7 @@ prep
 quant
 88556	prep
 88561	prep
+prep
 88565	prep
 88568	prep
 88580	prep
@@ -21863,6 +21878,7 @@ quant
 95842	prep
 95845	quant
 95850	prep
+prep
 95856	prep
 95861	prep
 95876	prep
@@ -22796,6 +22812,7 @@ quant
 99857	prep
 prep
 99863	prep
+prep
 99871	prep
 99876	prep
 99879	prep
@@ -25348,6 +25365,7 @@ prep
 111404	prep
 111407	prep
 111410	prep
+prep
 111416	prep
 111419	prep
 111422	prep
@@ -25531,6 +25549,7 @@ quant
 112440	prep
 112445	prep
 112450	prep
+prep
 112455	prep
 112460	prep
 112470	prep
@@ -27656,11 +27675,13 @@ prep
 121551	prep
 121555	prep
 121563	prep
+prep
 121568	prep
 prep
 121574	prep
 prep
 121583	prep
+prep
 121587	prep
 121593	prep
 121608	prep
@@ -29731,6 +29752,7 @@ prep
 131004	prep
 131009	prep
 131012	prep
+prep
 131018	prep
 131023	prep
 131031	prep
@@ -30198,6 +30220,7 @@ quant
 133011	prep
 133015	prep
 133021	prep
+prep
 133032	prep
 133034	prep
 133039	prep
@@ -30283,6 +30306,7 @@ prep
 133382	prep
 133386	prep
 133390	prep
+prep
 133396	prep
 quant
 133400	prep
@@ -30321,6 +30345,7 @@ prep
 133626	prep
 133631	prep
 133636	prep
+prep
 133642	prep
 133644	prep
 133650	prep
@@ -31097,6 +31122,7 @@ quant
 137273	prep
 137278	prep
 137282	prep
+prep
 137287	prep
 prep
 137292	prep
@@ -35368,6 +35394,7 @@ prep
 157857	quant
 157863	prep
 157871	prep
+prep
 157875	prep
 157880	prep
 157884	prep
@@ -36094,6 +36121,7 @@ prep
 161511	prep
 161513	quant
 161516	prep
+prep
 161519	quant
 161523	prep
 161528	prep
@@ -40184,11 +40212,13 @@ quant
 181171	quant
 181174	prep
 181176	prep
+prep
 181182	quant
 181188	quant
 181190	quant
 181203	prep
 181207	prep
+prep
 181211	quant
 prep
 181216	quant
@@ -40203,6 +40233,7 @@ prep
 181244	prep
 181251	prep
 181259	prep
+prep
 181265	prep
 181268	quant
 181272	prep
@@ -40221,6 +40252,7 @@ prep
 181323	prep
 181330	prep
 181334	prep
+prep
 181347	prep
 181351	quant
 prep
@@ -40299,8 +40331,10 @@ quant
 181634	quant
 prep
 181640	prep
+prep
 181644	quant
 181651	prep
+prep
 181658	prep
 181661	prep
 181666	prep
@@ -40344,12 +40378,14 @@ quant
 181784	prep
 181791	quant
 181797	prep
+prep
 181801	quant
 181805	quant
 prep
 181808	prep
 quant
 181814	prep
+prep
 181819	prep
 181822	quant
 quant
@@ -43194,6 +43230,7 @@ prep
 194961	quant
 194964	prep
 194968	prep
+prep
 194974	prep
 194987	prep
 194990	quant
@@ -46752,7 +46789,9 @@ prep
 212525	quant
 212537	prep
 212543	prep
+prep
 212552	prep
+prep
 212558	prep
 212562	prep
 quant
@@ -47713,6 +47752,7 @@ quant
 217795	quant
 quant
 217798	prep
+prep
 217801	quant
 quant
 prep
@@ -48246,6 +48286,7 @@ quant
 220799	prep
 220803	prep
 220816	prep
+prep
 220826	prep
 220828	prep
 220833	prep
@@ -48253,6 +48294,7 @@ quant
 220842	prep
 220844	prep
 220858	prep
+prep
 220862	prep
 220864	prep
 prep
@@ -48479,6 +48521,7 @@ prep
 222105	prep
 222108	prep
 222111	prep
+prep
 222116	prep
 222119	prep
 222126	prep
@@ -49237,6 +49280,7 @@ prep
 226678	prep
 prep
 226700	prep
+prep
 226705	prep
 226710	prep
 226715	prep
@@ -52779,6 +52823,7 @@ quant
 246328	prep
 246331	prep
 246335	prep
+prep
 246340	prep
 246344	prep
 246352	prep
@@ -53706,6 +53751,7 @@ prep
 250629	prep
 250632	prep
 250636	prep
+prep
 250641	prep
 prep
 250650	prep
@@ -55907,6 +55953,7 @@ prep
 261097	prep
 261102	prep
 261109	prep
+prep
 261115	prep
 261119	prep
 261128	prep
@@ -56039,6 +56086,7 @@ prep
 261847	prep
 261851	prep
 261860	prep
+prep
 261865	prep
 261875	prep
 261877	prep
@@ -58265,6 +58313,7 @@ prep
 272217	prep
 272222	prep
 272226	prep
+prep
 272232	prep
 272235	prep
 272241	prep
@@ -58350,6 +58399,7 @@ quant
 quant
 272622	prep
 272630	prep
+prep
 272638	prep
 272643	prep
 272656	prep
@@ -58835,6 +58885,7 @@ quant
 274926	quant
 274928	quant
 274932	prep
+prep
 274939	prep
 274942	prep
 274947	prep
@@ -60761,6 +60812,7 @@ quant
 prep
 283930	prep
 283934	prep
+prep
 283939	prep
 283942	prep
 283945	prep
@@ -60807,6 +60859,7 @@ prep
 284146	prep
 284149	prep
 284153	prep
+prep
 284160	prep
 284162	prep
 284166	prep
@@ -60971,6 +61024,7 @@ quant
 284943	quant
 284945	prep
 284947	prep
+prep
 284951	prep
 284954	prep
 284957	prep
@@ -61455,6 +61509,7 @@ prep
 286920	prep
 286925	prep
 286929	prep
+prep
 286933	prep
 prep
 286938	prep
@@ -61558,6 +61613,7 @@ quant
 quant
 287381	prep
 287386	prep
+prep
 287390	quant
 287406	prep
 287422	prep
@@ -62588,6 +62644,7 @@ quant
 291680	prep
 291683	prep
 291685	prep
+prep
 291696	prep
 291698	prep
 291712	prep
@@ -62618,6 +62675,7 @@ prep
 291874	prep
 prep
 291877	prep
+prep
 291883	prep
 291887	prep
 291896	prep
@@ -63107,6 +63165,7 @@ prep
 294443	prep
 294447	prep
 294450	prep
+prep
 294455	prep
 294461	prep
 294466	prep
@@ -64169,7 +64228,9 @@ quant
 300274	prep
 300287	prep
 300292	prep
+prep
 300301	prep
+prep
 300308	prep
 300312	prep
 300323	prep
@@ -68334,6 +68395,7 @@ prep
 322458	quant
 322465	prep
 322468	prep
+prep
 322472	prep
 322478	prep
 322480	prep
@@ -70006,6 +70068,7 @@ prep
 331248	prep
 prep
 331256	prep
+prep
 331259	prep
 prep
 331266	prep
@@ -70623,6 +70686,7 @@ quant
 334400	prep
 334404	prep
 334420	prep
+prep
 334438	prep
 334443	prep
 334446	prep
@@ -73184,6 +73248,7 @@ quant
 348836	quant
 348842	prep
 348853	prep
+prep
 348856	prep
 348861	prep
 348864	prep
@@ -78494,6 +78559,7 @@ prep
 376758	prep
 376761	prep
 376763	prep
+prep
 376770	prep
 376774	prep
 376776	prep
@@ -82637,6 +82703,7 @@ prep
 398026	prep
 398029	prep
 398039	prep
+prep
 398044	prep
 398047	prep
 398049	prep
@@ -85036,6 +85103,7 @@ prep
 408050	quant
 408054	prep
 408059	prep
+prep
 408066	quant
 408069	prep
 408074	prep
@@ -85121,12 +85189,14 @@ prep
 408351	prep
 408356	quant
 408363	prep
+prep
 408367	quant
 408371	quant
 prep
 408374	prep
 quant
 408380	prep
+prep
 408385	prep
 408388	quant
 quant
@@ -87569,7 +87639,9 @@ quant
 419163	quant
 quant
 419171	prep
+prep
 419177	prep
+prep
 419182	quant
 419191	prep
 419193	prep

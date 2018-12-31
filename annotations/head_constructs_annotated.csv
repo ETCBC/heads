@@ -1,0 +1,75 @@
+R,S1,S2,S3,NODE1,TYPE1,TEXT1,gloss1,lex1,prepositional
+1,Genesis,6,14,1437952,lex,בַּיִת ,house,BJT/,n
+2,Genesis,6,14,1437953,lex,חוּץ ,outside,XWY/,y
+3,Isaiah,17,6,1442946,lex,אָמִיר ,branch,>MJR/,y
+4,Genesis,49,26,1439363,lex,גִּבְעָה ,hill,GB<H/,y
+5,Genesis,40,1,1439107,lex,אֹפֶה ,baker,>PH/,n
+6,Genesis,2,8,1437700,lex,קֶדֶם ,front,QDM/,y
+7,Genesis,6,15,1437958,lex,קֹומָה ,height,QWMH/,y
+8,Genesis,3,24,1437826,lex,דֶּרֶךְ ,way,DRK/,y
+9,Genesis,27,28,1438728,lex,שָׁמָן ,fat,CMN==/,n
+10,Genesis,31,27,1438859,lex,שִׂמְחָה ,joy,FMXH/,n
+11,Genesis,10,14,1438095,lex,פְּלִשְׁתִּי ,Philistine,PLCTJ/,n
+12,Judges,6,26,1441552,lex,מָעֹוז ,fort,M<WZ/,y
+13,Leviticus,1,2,1440017,lex,קָרְבָּן ,offering,QRBN/,n
+14,Genesis,7,11,1437970,lex,חֹדֶשׁ ,month,XDC=/,y
+15,Genesis,4,7,1437847,lex,חַטָּאת ,sin,XV>T/,n
+16,Genesis,1,5,1437593,lex,קרא ,call,QR>[,n
+17,Genesis,41,5,1439130,lex,שִׁבֹּלֶת ,grain,CBLT/,n
+18,Numbers,31,11,1440667,lex,מַלְקֹוחַ ,what is taken,MLQWX/,n
+19,Genesis,7,19,1437982,lex,הַר ,mountain,HR/,y
+20,Genesis,1,5,1437599,lex,אֶחָד ,one,>XD/,n
+21,Exodus,28,33,1439905,lex,רִמֹּון ,pomegranate,RMWN/,n
+22,Proverbs,23,34,1444897,lex,חִבֵּל ,<uncertain>,XBL=====/,n
+23,Genesis,14,2,1438243,lex,מִלְחָמָה ,war,MLXMH/,n
+24,Genesis,41,19,1439140,lex,דַּל ,poor,DL/,n
+25,Esther,4,11,1445156,lex,שַׁרְבִיט ,staff,CRBJV/,n
+26,1_Kings,1,41,1442215,lex,המה ,make noise,HMH[,n
+27,Exodus,29,6,1439914,lex,נֵזֶר ,consecration,NZR/,n
+28,Exodus,10,11,1439531,lex,גֶּבֶר ,vigorous man,GBR/,n
+29,Genesis,4,17,1437868,lex,עִיר ,town,<JR/,y
+30,Exodus,25,6,1439791,lex,בֹּשֶׂם ,balsam-tree,BFM/,n
+31,Genesis,1,11,1437618,lex,זֶרַע ,seed,ZR</,n
+32,Genesis,32,16,1438899,lex,פַּר ,young bull,PR/,n
+33,Genesis,2,22,1437748,lex,אִשָּׁה ,woman,>CH/,n
+34,Exodus,12,3,1439541,lex,עֵדָה ,gathering,<DH/,n
+35,Genesis,2,23,1437752,lex,אִישׁ ,man,>JC/,n
+36,Genesis,47,31,1439290,lex,מִטָּה ,couch,MVH=/,y
+37,Genesis,2,24,1437754,lex,אָב ,father,>B/,n
+38,Genesis,1,14,1437627,lex,שָׁנָה ,year,CNH/,y
+39,Exodus,17,6,1439677,lex,צוּר ,rock,YWR/,y
+40,Genesis,1,16,1437629,lex,שְׁנַיִם ,two,CNJM/,n
+41,Genesis,8,20,1438016,lex,עֹלָה ,burnt-offering,<LH/,n
+42,Genesis,41,56,1439171,lex,שׁבר ,buy grain,CBR=[,n
+43,2_Samuel,5,23,1441988,lex,בָּכָא ,baka-shrub,BK>/,n
+44,Genesis,11,3,1438149,lex,רֵעַ ,fellow,R<=/,n
+45,Numbers,1,16,1440329,lex,אֶלֶף ,group of thousand,>LP==/,n
+46,Genesis,1,21,1437644,lex,כֹּל ,whole,KL/,n
+47,Genesis,18,12,1438414,lex,אָדֹון ,lord,>DWN/,n
+48,Genesis,11,6,1438159,lex,עַם ,people,<M/,n
+49,Psalms,63,7,1444430,lex,אַשְׁמוּרָה ,night watch,>CMWRH/,n
+50,Exodus,4,14,1439440,lex,לֵוִי ,Levite,LWJ/,n
+51,Exodus,12,29,1439570,lex,שְׁבִי ,captive,CBJ/,n
+52,Genesis,22,17,1438546,lex,איב ,be hostile,>JB[,n
+53,Genesis,37,31,1439062,lex,שָׂעִיר ,he-goat,F<JR/,n
+54,Genesis,49,10,1439319,lex,שֵׁבֶט ,rod,CBV/,n
+55,Genesis,1,24,1437654,lex,חַיָּה ,wild animal,XJH/,n
+56,Numbers,20,8,1440473,lex,סֶלַע ,rock,SL</,y
+57,Genesis,18,23,1438429,lex,רָשָׁע ,guilty,RC</,n
+58,Exodus,13,21,1439585,lex,עַמּוּד ,pillar,<MWD/,y
+59,Genesis,35,2,1438951,lex,טהר ,be clean,VHR[,n
+60,Ezekiel,17,4,1443816,lex,יְנִיקָה ,shoot,JNJQH/,y
+61,Genesis,3,16,1437801,lex,בֵּן ,son,BN/,n
+62,Exodus,27,2,1439850,lex,פִּנָּה ,corner,PNH=/,y
+63,Numbers,6,5,1440365,lex,פֶּרַע ,loose hair,PR</,n
+64,Numbers,21,20,1440493,lex,גַּיְא ,valley,GJ>/,y
+65,Genesis,49,19,1439344,lex,גְּדוּד ,band,GDWD/,y
+66,Ezekiel,17,22,1443825,lex,יֹונֶקֶת ,shoot,JWNQT/,y
+67,Genesis,10,5,1438066,lex,גֹּוי ,people,GWJ/,n
+68,Genesis,15,9,1438323,lex,אַיִל ,"ram, despot",>JL=/,n
+69,Judges,5,18,1441524,lex,מָרֹום ,high place,MRWM/,y
+70,Genesis,38,18,1439093,lex,מַטֶּה ,staff,MVH/,y
+71,Genesis,2,6,1437690,lex,שׁקה ,give drink,CQH[,n
+72,Genesis,12,15,1438203,lex,שַׂר ,chief,FR/,n
+73,1_Kings,7,27,1442301,lex,מְכֹונָה ,place,MKWNH/,y
+74,Genesis,3,24,1437822,lex,כְּרוּב ,cherub,KRWB/,n
