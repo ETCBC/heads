@@ -5,7 +5,7 @@
 @source=see the creation notebooks at https://github.com/etcbc/heads
 @valueType=str
 @writtenBy=Text-Fabric
-@dateWritten=2018-12-15T02:28:18Z
+@dateWritten=2018-12-31T12:08:39Z
 
 prep
 5	prep
@@ -740,6 +740,7 @@ quant
 3270	quant
 3273	quant
 3275	prep
+quant
 3295	quant
 3298	prep
 prep
@@ -1738,6 +1739,7 @@ quant
 7732	prep
 7738	prep
 7741	prep
+quant
 7747	prep
 7750	prep
 7755	quant
@@ -1748,6 +1750,7 @@ quant
 7770	prep
 7772	prep
 7775	prep
+quant
 7787	quant
 7795	prep
 prep
@@ -7319,6 +7322,7 @@ prep
 35053	prep
 35056	prep
 35060	prep
+quant
 35067	prep
 35069	prep
 35074	prep
@@ -7444,6 +7448,7 @@ quant
 35583	quant
 quant
 35588	prep
+quant
 35595	quant
 35598	prep
 35604	prep
@@ -7484,6 +7489,7 @@ quant
 35737	prep
 35740	prep
 35746	prep
+quant
 35754	prep
 35757	prep
 35760	prep
@@ -8780,6 +8786,7 @@ prep
 41801	prep
 41803	prep
 41809	prep
+quant
 41813	prep
 41816	prep
 41825	prep
@@ -14537,6 +14544,7 @@ quant
 66145	prep
 66149	prep
 66167	prep
+quant
 66173	prep
 66175	prep
 66180	prep
@@ -14575,6 +14583,7 @@ quant
 66298	prep
 66300	prep
 66305	prep
+quant
 66314	prep
 quant
 66322	prep
@@ -14606,16 +14615,19 @@ prep
 66429	prep
 66432	quant
 66436	prep
+quant
 66446	prep
 66448	prep
 prep
 prep
 66454	quant
 66460	prep
+quant
 66468	prep
 66471	quant
 66476	quant
 66478	prep
+quant
 66486	prep
 66491	prep
 66494	quant
@@ -25445,6 +25457,7 @@ quant
 112111	prep
 112116	prep
 112118	prep
+quant
 112124	prep
 112127	prep
 112136	prep
@@ -26176,6 +26189,7 @@ quant
 115217	prep
 115221	prep
 115228	prep
+quant
 115238	prep
 115240	prep
 115242	prep
@@ -27033,6 +27047,7 @@ prep
 119005	prep
 119015	prep
 119019	prep
+quant
 119026	prep
 119030	prep
 119037	prep
@@ -56815,6 +56830,7 @@ prep
 265366	prep
 265371	prep
 prep
+quant
 265388	prep
 prep
 265392	prep
@@ -59177,8 +59193,10 @@ prep
 276581	prep
 prep
 276586	prep
+quant
 276595	prep
 276597	prep
+quant
 276605	prep
 276612	prep
 276624	prep
@@ -60960,6 +60978,7 @@ quant
 quant
 284961	prep
 284966	prep
+quant
 284973	prep
 284978	prep
 284980	prep
@@ -71841,6 +71860,7 @@ prep
 341367	quant
 341371	prep
 341381	prep
+quant
 341384	quant
 341398	prep
 341404	prep
