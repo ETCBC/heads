@@ -4,6 +4,10 @@
 
 ## [See the production notebook](https://nbviewer.jupyter.org/github/ETCBC/heads/blob/master/phrase_heads.ipynb)
 
+## UPDATES July 2019
+
+Heads is being completely revamped with a new pipeline. The heads repository is now expanding in scope to cover word-level grammatical relationships. Those relationships will be detected and utilized to calculate semantic heads. The relationships will replace the reliance on the BHSA `subphrase` object and its `rela` features, which suffer from numerous inconsistencies and shortcomings.
+
 ## Features
 
 This project produces the following features:
