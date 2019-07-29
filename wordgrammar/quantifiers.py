@@ -1,3 +1,5 @@
+from positions import Positions
+
 class Quants:
     
     def __init__(self, tf):
@@ -7,26 +9,36 @@ class Quants:
         custom quantifier nodes
         '''
 
-        custom_quants = set()
-        custom_quants |= set(F.ls.s('card')) & set(F.otype.s('word'))
-        custom_quants |= set(F.ls.s('ordn')) & set(F.otype.s('word'))
-
-        quant_lexs = '|'.join(['KL/', 'M<V/', 'JTR/',
-                                 'M<FR/', 'XYJ/', '<FRWN/',
-                                 'C>R=/', 'MSPR/', 'RB/', 'RB=/',
-                                 'XMJCJT/'])
-        custom_quants |= set(A.search(f'word lex={quant_lexs}', shallow=True, silent=True))
-
-        # for the Hebrew idiom: בנ + quantifier for age
-        for w in set(F.otype.s('word')) & set(F.lex.s('BN/')):
-            pos = Positions(w, 'phrase_atom', A).get
-            if all([F.ls.v(pos(1)) == 'card',
-                    F.st.v(w) == 'c',
-                    F.nu.v(w) == 'sg']):
-                custom_quants.add(w)
-
-        len(custom_quants)
-
-        custom_preps = set()
+        F = tf.api.F
         
+        quants = set()
+        quants |= set(F.ls.s('card')) & set(F.otype.s('word'))
+        quants |= set(F.ls.s('ordn')) & set(F.otype.s('word')) # NB! FIX: NOT STRICTLY A QUANT!
+
+        # -- contextual cases -- 
         
+        for w in F.otype.s('word'):
+        
+            P = Positions(w, 'phrase_atom', tf).get
+        
+            # -- custom lexemes-- 
+            custom = {'KL/', 'M<V/', 'JTR/',
+                      'M<FR/', 'XYJ/', '<FRWN/',
+                      'C>R=/', 'MSPR/', 'RB/', 
+                      'RB=/', 'XMJCJT/'}
+            if F.lex.v(w) in custom:
+                quants.add(w)
+                continue
+
+            # -- the Hebrew idiom: בנ + quantifier for age --
+            conds = [
+                P(0, 'lex') == 'BN/',
+                P(0, 'st') == 'c',
+                P(0, 'nu') == 'sg',
+                P(1, 'ls') == 'card',
+            ]
+            if all(conds):
+                quants.add(w)
+                continue
+        
+        self.quants = quants
