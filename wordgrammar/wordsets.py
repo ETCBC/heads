@@ -16,7 +16,7 @@ import os
 from quantifiers import Quants
 from prepositions import Preps
 from pairs import Conjunction, Construct
-#from accents import Disjoint
+from accents import Accents
 
 class WordSets:
     '''
@@ -25,6 +25,10 @@ class WordSets:
     '''
     def __init__(self, tf, silent=True):
         self.silent = silent
+        
+        self.report('processing accents...')
+        self.accents = Accents(tf)
+        self.report('\tdone')
         
         self.report('processing quants...')
         self.quants = Quants(tf).quants
@@ -41,8 +45,7 @@ class WordSets:
         self.report('processing constructs...')
         self.constpairs = Construct(tf).pairs
         self.report('\tdone')
-            
-        #self.accents = Accents(tf)
+        
         #self.sim = Sim(tf).get
         
     def report(self, mssg):
