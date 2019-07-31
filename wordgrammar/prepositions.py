@@ -55,11 +55,9 @@ class Preps:
                 
                 P(0, 'lex') in preprep,
                 P(0, 'prs') == 'absent',
-                (
-                    P(-1, 'pdp') == 'prep'
-                    or P(-1, 'ls') == 'ppre'
-                    or P(-1, 'lex') == 'KL/'
-                ),
+                (P(-1, 'pdp') == 'prep'
+                     or P(-1, 'ls') == 'ppre'
+                     or P(-1, 'lex') == 'KL/'),
                 P(1, 'lex') != 'W'
                 
             ]
@@ -120,10 +118,8 @@ class Preps:
                 P(0, 'lex') == 'R>C/',
                 P(0, 'st') == 'c',
                 P(-1, 'pdp') == 'prep',
-                (
-                    F.lex.v(construct) in rosh_kids
-                    or P(1, 'ls') == 'card'
-                )
+                (F.lex.v(construct) in rosh_kids
+                    or P(1, 'ls') == 'card')
             ]
             if all(conds):
                 self.preps.add(w)

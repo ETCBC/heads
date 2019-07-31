@@ -12,7 +12,7 @@ def book_class(node, tf):
         return '21'
     else:
         return '3'
-
+    
 def masoretic_word(word, tf):
     '''
     Retrieves complete phonological unit
@@ -25,33 +25,41 @@ def masoretic_word(word, tf):
     is treated separately from the subsequent word.
     '''
     F, T = tf.api.F, tf.api.T
+    
+    def maketext(word):
+        # make text for regexing
+        return str(F.trailer.v(word))
 
     mwords = {word} # collect them here
     thisword = word-1
-    ending = str(F.trailer.v(thisword))
+    text = maketext(thisword)
 
     # back up `this_word` to beginning
-    while ('&' in ending) or (ending == ''):
+    while ('&' in text) or (F.trailer.v(thisword) == ''):
         mwords.add(thisword)
         thisword = thisword-1
-        ending = str(F.trailer.v(thisword))
+        text = maketext(thisword)
 
     # restart at middle
     thisword = word
-    ending = F.trailer.v(thisword)
+    text = maketext(thisword)
 
     # move from middle to end
-    while ('&' in ending) or (ending == ''):
+    while ('&' in text) or (F.trailer.v(thisword) == ''):
         mwords.add(thisword+1)
         thisword = thisword+1
-        ending = str(F.trailer.v(thisword))
+        text = maketext(thisword)
 
     return tuple(sorted(mwords))
 
 class Accents:
     
     '''
-    DESCRIPTION HERE
+    Classifies words as disjunct or conjunct
+    depending on the cantillation signs.
+    Makes these sets available under
+    a series of dict mappings, allowing the
+    results to be scrutinized.
     '''
     
     def __init__(self, tf):
@@ -64,6 +72,7 @@ class Accents:
             '21': {
                 'paseq': '.*05',
                 'atnach': '.*92',
+                'silluq': '.*75',
                 #'tiphchah' see special function below
                 'zaqeph qaton': '.*80',
                 'zaqeph gadol': '.*85',
@@ -74,7 +83,7 @@ class Accents:
                 'pashta': '.*03',
                 'yetiv': '.*10', 
                 'tebir': '.*91',
-                'geresh': '.*61',
+                'geresh': '.*(61|11)',
                 'gershayim': '.*62',
                 'pazer qaton': '.*83',
                 'qarney parah': '.*84',
@@ -83,6 +92,7 @@ class Accents:
             '3': {
                 'paseq': '.*05',
                 'atnach': '.*92',
+                'silluq': '.*75',
                 'rebia': '.*81',
                 'oleh weyored': '.*60.*71',
                 'rebia mugrash': '.*11.*81',
@@ -99,13 +109,14 @@ class Accents:
         conA = {
             '21': {
                 'munach': '.*74',
-                'mehuppak': '.*64',
+                'mehuppak': '.*70',
                 'mereka': '.*71',
+                'merekah kefula': '.*72',
                 'darga': '.*94',
                 'azla/qadma': '.*(63|33)',
                 'telisha qetannah': '.*04',
                 'yerah': '.*93',
-                'mayela': '.*73\S+(75|92)' # assumes _ replaced with \s
+                'mayela': '.*73\S+(75|92)', # assumes _ replaced with \s
             },
             '3': {
                 'munach': '.*74',
@@ -113,7 +124,7 @@ class Accents:
                 'illuy': '.*64',
                 'tarcha (tiphcha)': '.*73',
                 'yerah': '.*93',
-                'mehuppak': '.*64',
+                'mehuppak': '.*70',
                 'azla/qadma': '.*(63|33)',
             }
         }
@@ -127,10 +138,15 @@ class Accents:
         self.conRE = {bclass: {name:re.compile(patt) for name, patt in names.items()} 
                           for bclass, names in conA.items()}
         
+        # generate masoretic word sets
+        self.mwords = {}
+        for w in self.F.otype.s('word'):
+            self.mwords[w] = masoretic_word(w, self.tf)
+        
         # assemble word sets
         self.accenttype = {}
-        self.atype2set = collections.defaultdict(set)
-        self.atype2name2set = collections.defaultdict(lambda:collections.defaultdict(set))
+        self.atype2set = collections.defaultdict(list)
+        self.atype2name2set = collections.defaultdict(lambda:collections.defaultdict(list))
         
         # loop and assign labels
         for w in set(self.F.otype.s('word')):
@@ -139,15 +155,15 @@ class Accents:
                 conmatches = self.conjunct(w)                
             if dismatches:
                 self.accenttype[w] = 'disjunct'
-                self.atype2set['disjunct'].add(w)
-                self.atype2name2set['disjunct'][dismatches].add(w)
+                self.atype2set['disjunct'].append((w,))
+                self.atype2name2set['disjunct'][dismatches].append((w,))
             elif conmatches:
                 self.accenttype[w] = 'conjunct'
-                self.atype2set['conjunct'].add(w)
-                self.atype2name2set['conjunct'][conmatches].add(w)
+                self.atype2set['conjunct'].append((w,))
+                self.atype2name2set['conjunct'][conmatches].append((w,))
             else:
                 self.accenttype[w] = 'unknown'
-                self.atype2set['unknown'].add(w)
+                self.atype2set['unknown'].append((w,))
                 
     def clean(self, text):
         '''
@@ -161,7 +177,7 @@ class Accents:
         with a regex match.
         '''
         # get and test phonological unit
-        mword = self.T.text(masoretic_word(word, self.tf), fmt='text-trans-full')
+        mword = self.T.text(self.mwords[word], fmt='text-trans-full')
         mword = self.clean(mword)
         bclass = book_class(word, self.tf)
         
@@ -197,7 +213,7 @@ class Accents:
         in an `elif` only AFTER checking disjunctives.
         '''
         # get and test phonological unit
-        mword = self.T.text(masoretic_word(word, self.tf), fmt='text-trans-full')
+        mword = self.T.text(self.mwords[word], fmt='text-trans-full')
         mword = self.clean(mword)
         bclass = book_class(word, self.tf)
         

@@ -20,6 +20,7 @@ class Conjunction:
         
         covered = set() # skip items already matched
         self.pairs = collections.defaultdict(set)
+        self.pairresults = collections.defaultdict(lambda:collections.defaultdict(list))
     
         # gather pairs
         for w in F.otype.s('word'):
@@ -39,6 +40,7 @@ class Conjunction:
                     if i == j:
                         continue
                     self.pairs[F.lex.v(i)].add(F.lex.v(j))
+                    self.pairresults[F.lex.v(i)][F.lex.v(j)].append((i, j))
 
     def conj_climber(self, a):
         '''
@@ -99,6 +101,7 @@ class Construct:
         
         F = tf.api.F
         self.pairs = collections.defaultdict(set)
+        self.pairresults = collections.defaultdict(lambda:collections.defaultdict(list))
         
         for word in set(F.otype.s('word')) & set(F.st.s('c')):
         
@@ -118,3 +121,4 @@ class Construct:
                 continue
                 
             self.pairs[F.lex.v(word)].add(F.lex.v(construct))
+            self.pairresults[F.lex.v(word)][F.lex.v(construct)].append((word, construct))
