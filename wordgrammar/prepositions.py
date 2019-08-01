@@ -3,6 +3,7 @@ Delivers custom prepositions.
 '''
 
 import csv
+import collections
 from positions import Positions
 
 class Preps:
@@ -10,8 +11,7 @@ class Preps:
     def __init__(self, tf):
         
         F = tf.api.F
-        self.preps = set(w for w in F.otype.s('word') if F.pdp.v(w)=='prep')
-        
+        self.preps = set(w for w in F.otype.s('word') if F.pdp.v(w)=='prep')        
         
         # -- ETCBC "potential preps" --
         # דרך is excluded since this is speculative
