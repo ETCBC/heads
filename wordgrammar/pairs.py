@@ -6,6 +6,7 @@ ambiguous cases.
 
 import collections
 from positions import Positions
+from context import Mom
 
 class Conjunction:
     '''
@@ -13,11 +14,12 @@ class Conjunction:
     Returns a dict mapping from a word to all its pairs.
     '''
     
-    def __init__(self, tf):
+    def __init__(self, tf, **wsets):
         
         self.tf = tf
         F = tf.api.F
-        
+        quants = wsets['quants'] # wordsets
+        preps = wsets['preps']
         covered = set() # skip items already matched
         self.pairs = collections.defaultdict(set)
         self.pairresults = collections.defaultdict(lambda:collections.defaultdict(list))
@@ -54,37 +56,7 @@ class Conjunction:
         P = Positions(a, 'phrase', self.tf).get
         subs = {'subs', 'nmpr', 'adjv'}
 
-        # define set of potential conjunction positions
-        b = (
-            (P(2) 
-                 if P(1,'sp') == 'conj'
-                 and P(2,'sp') != 'art'
-                 and P(2,'sp') in subs 
-                 else None)
-
-            or (P(3)
-                    if P(-1,'sp') == 'art' 
-                    and P(1,'sp') == 'conj'
-                    and P(2,'sp') == 'art' 
-                    and P(3,'sp') in subs 
-                    else None)
-
-            or (P(3) 
-                    if P(-1,'sp') == 'prep' 
-                    and P(1,'sp') == 'conj'
-                    and P(2,'sp') == 'prep' 
-                    and P(3,'sp') in subs 
-                    else None)
-
-            or (P(4)
-                    if P(-1,'sp') == 'art' 
-                    and P(-2,'sp') == 'prep' 
-                    and P(1,'sp') == 'conj'
-                    and P(2,'sp') == 'prep'
-                    and P(3,'sp') == 'art'
-                    and P(4,'sp') in subs
-                    else None)
-            )
+        b = 
 
         if b:
             yield from self.conj_climber(b)

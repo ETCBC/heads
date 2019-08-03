@@ -5,12 +5,6 @@ environment surrounding a given node.
 
 from positions import Positions, Getter
 
-def conddict(*conds):
-    '''
-    Convert string arguments to string:eval(string) dict.
-    '''
-    return {cond:eval(cond) for cond in conds}
-
 def getnext(condict):
     '''
     Evaluates a condition dict and 
@@ -36,26 +30,31 @@ class Mom:
     These patterns reflect productive constructions.
     '''
     
-    def __init__(self, n, tf, **kwargs):
-        
-        tf = kwargs['tf'] # text-fabric
-        wsets = kwargs['wset'] # word set
-        p = Positions(n, 'phrase_atom', tf).get
+    def __init__(self, n, tf, **wsets):
+        quants = wsets['quants'] # word sets
+        preps = wsets['preps']
+        P = Positions(n, 'phrase_atom', tf).get
         self.kids = {}
         self.explain = {}
+        
+        # set up vars
+        self.P = P
+        self.quants = quants
+        self.preps = preps
+        conddict = self.conddict
         
         # RETRIEVE RELATIONSHIPS
         
         # -- construct patterns --        
         const = {
-                p(1): conddict(
-                    "p(0,'st') == 'c'",
-                    "p(1,'sp') != 'art'",
+                P(1): conddict(
+                    "P(0,'st') == 'c'",
+                    "P(1,'sp') != 'art'",
                 ),
             
-                p(2): conddict(
-                    "p(0,'st') == 'c'",
-                    "p(1,'sp') == 'art'",
+                P(2): conddict(
+                    "P(0,'st') == 'c'",
+                    "P(1,'sp') == 'art'",
                 ),
         }
         
@@ -71,172 +70,109 @@ class Mom:
         
         # -- kid
         adja = {
-            p(1): conddict(
-                "p(1,'sp') in nominals",
-                "p(1,'nu') == p(0,'nu')",
-                "p(0,'st') == 'a'",
-            )
+            P(1): conddict(
+                "P(1,'sp') in nominals",
+                "P(1,'nu') == P(0,'nu')",
+                "P(0,'st') == 'a'",
+            ),
             
-            p(1): conddict(
-                "p(1,'sp vt').issubset({'verb', 'ptcp', 'ptca'})",
-                "p(1,'nu') == p(0,'nu')",
-                "p(0,'st') == 'a'",
-            )
+            P(1): conddict(
+                "P(1,'sp vt').issubset({'verb', 'ptcp', 'ptca'})",
+                "P(1,'nu') == P(0,'nu')",
+                "P(0,'st') == 'a'",
+            ),
             
-            p(2): conddict(
-                "p(1,'sp') == 'art'",
-                "p(2,'sp') in nominals",
-                "p(2,'nu') == p(0,'nu')",
-                "p(0,'st') == 'a'",
-            )
+            P(2): conddict(
+                "P(1,'sp') == 'art'",
+                "P(2,'sp') in nominals",
+                "P(2,'nu') == P(0,'nu')",
+                "P(0,'st') == 'a'",
+            ),
         }
         
         self.kids['adja'] = getnext(adja)
-        self.explain('adja') = adja
+        self.explain['adja'] = adja
         
         # -- preposition mods -- 
         # NB: noun + prep NOT prep + noun
         
         prep = {
-            
-            p(1): conddict(
-                "p(1, 'sp') == prep"
-            
+            P(1): conddict(
+                "P(1) in preps"
             )
-            
         }
         
-        prep_m = clear([ 
-            
-            (p(-1)
-                if p(-1,'sp') == 'prep' or p(-1) in custom_preps
-                else None),
-
-            (p(-2)
-                if p(-1,'sp') == 'art'
-                and p(-2,'sp') == 'prep' or p(-2) in custom_preps
-                else None),
-        ])
+        self.kids['prep'] = getnext(prep)
+        self.explain['prep'] = prep
         
-        self.mom['prep'] = Getter(prep_m)[0]
+        # -- coordinate patterns -- 
+        # NB: kid == thismom AND thatkid
+        
+        coord = {
     
-        # ** coordinate patterns **
-        # NB: before == mom; after == kid
+            P(2): conddict(
+                "P(1,'sp') == 'conj'",
+                "P(1, 'sp') in nominals",
+            ),
+            
+            P(3): conddict(
+                "P(1,'sp') == 'conj'",
+                "P(2, 'sp') == 'art'",
+            ),
+            
+            P(3): conddict(
+                "P(1,'sp') == 'conj'",
+                "P(2) in preps",
+                "P(3,'sp') in nominals",
+                "P(-1) in preps",
+            ),
+            
+            P(4): conddict(
+                "P(1,'sp') == 'conj'",
+                "P(2) in preps",
+                "P(3,'sp') == 'art'",
+                "P(-1, 'sp') == 'art'",
+                "P(-2) in preps",
+            ),
+        }
         
-        # -- mom
-        coord_m = clear([
-            
-            (p(-2) 
-                if p(-1,'sp') == 'conj'
-                else None),
-
-            (p(-3)
-                if p(-1,'sp') == 'art'
-                and p(-2,'sp') == 'conj'
-                else None),
-
-            (p(-3)
-                if p(-1,'sp') == 'prep'
-                and p(-2,'sp') == 'conj'
-                else None),
-
-            (p(-4)
-                if p(-1,'sp') == 'art'
-                and p(-2,'sp') == 'prep' or p(-2) in custom_preps
-                and p(-3,'sp') == 'conj'
-                else None),
-        ])
-        
-        # -- kid
-        coord_k = clear([
-            
-            (p(2)
-                if p(1,'sp') == 'conj'
-                else None),
-            
-            (p(3)
-                if p(1,'sp') == 'conj'
-                and p(2, 'sp') == 'art'
-                else None),
-            
-            (p(3)
-                if p(1,'sp') == 'conj'
-                and p(2,'sp') == 'prep' or p(2) in custom_preps
-                and p(3,'sp') != 'art'
-                else None),
-            
-            (p(4)
-                if p(1,'sp') == 'conj'
-                and p(2,'sp') == 'prep' or p(2) in custom_preps
-                and p(3,'sp') == 'art'
-                else None),
-            
-        ])
-        
-        self.mom['coord'] = Getter(coord_m)[0]
-        self.kid['coord'] = Getter(coord_k)[0]
+        self.kids['coord'] = getnext(coord)
+        self.explain['coord'] = coord
     
-        # ** quantifier patterns **
-        
-        # -- mom
-        quant_m = clear([
+        # -- quantifier patterns --
+        quant = {
             
-            (p(-1)
-                if p(0) in custom_quants
-                and p(-1) not in custom_quants
-                and p(-1,'sp') in {'subs', 'adjv'}
-                else None),
-            
-            (p(-2)
-                if p(0) in custom_quants
-                and p(-2) not in custom_quants
-                and p(-1,'sp') == 'art'
-                else None),
-            
-            (p(1) 
-                if p(0) in custom_quants
-                and p(1) not in custom_quants
-                and p(1,'sp') in {'subs', 'adjv'}
-                else None),
-            
-            (p(2)
-                if p(0) in custom_quants
-                and p(2) not in custom_quants
-                and p(1,'sp') == 'art'
-                else None),
-        
-        ])
-        
-        # -- kid
-        quant_k = clear([
-            
-            (p(1) 
-                if p(0) not in custom_quants
-                and p(1) in custom_quants
-                and p(1,'sp') in {'subs', 'adjv'}
-                else None),
+            P(1): conddict(
+                "P(0) not in quants",
+                "P(1) in quants",
+            ),
 
-            (p(2) 
-                if p(0) not in custom_quants
-                and p(2) in custom_quants
-                and p(1,'sp') == 'art'
-                and p(2,'sp') in {'subs', 'adjv'}
-                else None),
+            P(2): conddict(
+                "P(0) not in quants",
+                "P(2) in quants",
+                "P(1,'sp') == 'art'",
+            ),
 
-            (p(-1) 
-                if p(0) not in custom_quants
-                and p(-1) in custom_quants
-                and p(-1,'sp') in {'subs', 'adjv'}
-                else None),
-
-            (p(-2) 
-                if p(0) not in custom_quants
-                and p(-2) in custom_quants
-                and p(-1,'sp') == 'art'
-                and p(-2,'sp') in {'subs', 'adjv'}
-                else None),
+            P(-1): conddict(
+                "P(0) not in quants",
+                "P(-1) in custom_quants",
+            ),
             
-        ])
+            P(-2): conddict(
+                "P(0) not in quants",
+                "P(-2) in quants",
+                "P(-1,'sp') == 'art'",
+            ),
+        }
         
-        self.mom['quant'] = Getter(quant_m)[0]
-        self.kid['quant'] = Getter(quant_k)[0]
+        self.kids['quant'] = getnext(quant)
+        self.explain['quant'] = quant
+        
+    def conddict(self, *conds):
+        '''
+        Convert string arguments to string:eval(string) dict.
+        '''
+        P = self.P
+        quants = self.quants
+        preps = self.preps
+        return {cond:eval(cond) for cond in conds}
