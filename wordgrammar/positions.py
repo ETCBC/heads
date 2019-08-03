@@ -62,7 +62,7 @@ class Positions:
             
         get_pos = self.n
         for count in range(0, abs(position)):
-            get_pos = Getter(method(get_pos, self.thisotype))[0]
+            get_pos = Getter(method(get_pos, self.thisotype))[0] or 0
         
         # return None, empty string, or empty set if beyond boundaries
         if get_pos not in positions:
@@ -99,3 +99,26 @@ class Positions:
             raise Exception('Provided context is smaller than the provided node!')
         else:
             return Getter(L.u(self.n, otype))[0]
+        
+class Evaluator:
+    '''
+    Evaluates strings within a prepared namespace.
+    Allows string conditionals to be fed in for 
+    evaluation. Can also construct a dict mapping from
+    string to its evaluation.
+    '''
+    def __init__(self, namespace):
+        self.namespace = namespace
+    def evaluate(self, cond):
+        return eval(cond, self.namespace)
+    def conddict(self, *conds):
+        return {cond:eval(cond, self.namespace) for cond in conds}
+    
+def showconds(conddict):
+    '''
+    Print out results from a conddict.
+    '''
+    for node, conds in conddict:
+        print('node', node)
+        for cond, truth in conds.items():
+            print('\t{:<25} {:>25}'.format(cond, str(truth)))

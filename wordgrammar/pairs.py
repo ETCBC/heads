@@ -1,7 +1,8 @@
 '''
-Defines a series of observed word-pairs in
-the corpus which are used for distinguishing
-ambiguous cases.
+Defines a series of observed word-pairs in the corpus 
+which are used for distinguishing ambiguous cases.
+These functions require pre-processed word sets 
+of quantifiers and prepositions.
 '''
 
 import collections
@@ -18,9 +19,8 @@ class Conjunction:
         
         self.tf = tf
         F = tf.api.F
-        quants = wsets['quants'] # wordsets
-        preps = wsets['preps']
         covered = set() # skip items already matched
+        self.wsets = wsets
         self.pairs = collections.defaultdict(set)
         self.pairresults = collections.defaultdict(lambda:collections.defaultdict(list))
     
@@ -28,7 +28,8 @@ class Conjunction:
         for w in F.otype.s('word'):
 
             # skip words already visited in a chain
-            if w in covered:
+            # or those that are not nominal parts of speech
+            if w in covered or F.sp.v(w) not in wsets['noms']:
                 continue
 
             # check for chain
@@ -53,10 +54,7 @@ class Conjunction:
 
         yield a
 
-        P = Positions(a, 'phrase', self.tf).get
-        subs = {'subs', 'nmpr', 'adjv'}
-
-        b = 
+        b = Mom(a, self.tf, **self.wsets).coordinate()
 
         if b:
             yield from self.conj_climber(b)
@@ -69,25 +67,20 @@ class Construct:
     of valid goverened genitives.
     '''
     
-    def __init__(self, tf):
+    def __init__(self, tf, **wsets):
         
         F = tf.api.F
+        
         self.pairs = collections.defaultdict(set)
         self.pairresults = collections.defaultdict(lambda:collections.defaultdict(list))
         
         for word in set(F.otype.s('word')) & set(F.st.s('c')):
         
-            P = Positions(word, 'verse', tf).get
+            # skip non-nominal words
+            if F.sp.v(word) not in wsets['noms']:
+                continue
         
-            # Set up potential construct position
-            construct = (
-                P(1)
-                    if P(1, 'sp') != 'art'
-                    else None
-                or P(2)
-                    if P(1, 'sp') == 'art'
-                    else None
-            )
+            construct = Mom(word, tf, **wsets).construct()
             
             if not construct:
                 continue

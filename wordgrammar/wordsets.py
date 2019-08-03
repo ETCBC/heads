@@ -15,7 +15,7 @@ for matching patterns.
 import os
 from quantifiers import Quants
 from prepositions import Preps
-#from pairs import Conjunction, Construct
+from pairs import Conjunction, Construct
 from accents import Accents
 
 class WordSets:
@@ -24,7 +24,11 @@ class WordSets:
     their respective scripts.
     '''
     def __init__(self, tf, silent=True):
+        
         self.silent = silent
+        
+        self.nominals = {'subs', 'nmpr', 'adjv', 'advb', 
+                         'prde', 'prps', 'prin', 'inrg'}
         
         self.report('processing accents...')
         self.accents = Accents(tf)
@@ -38,13 +42,13 @@ class WordSets:
         self.preps = Preps(tf).preps
         self.report('\tdone')
         
-#         self.report('processing conjunctions...')
-#         self.conjs = Conjunction(tf)
-#         self.report('\tdone')
+        self.report('processing conjunctions...')
+        self.conjs = Conjunction(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
+        self.report('\tdone')
         
-#         self.report('processing constructs...')
-#         self.consts = Construct(tf)
-#         self.report('\tdone')
+        self.report('processing constructs...')
+        self.consts = Construct(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
+        self.report('\tdone')
         
         #self.sim = Sim(tf).get
         

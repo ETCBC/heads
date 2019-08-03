@@ -3,15 +3,14 @@ Classes that collect data on the grammatical
 environment surrounding a given node.
 '''
 
-from positions import Positions, Getter
+from positions import Positions, Getter, Evaluator
 
-def getnext(condict):
+def getnext(ctuple):
     '''
-    Evaluates a condition dict and 
-    returns first valid item.
+    Returns first valid node from a {node:{string:boolean}} dict
+    where all booleans must == True.
     '''
-    results = [pos for pos, conds in conddict.items 
-                   if all(conds.values())]
+    results = [pos for pos, conds in ctuple if all(conds.values())]
     return Getter(results)[0]
     
 class Mom:
@@ -30,149 +29,184 @@ class Mom:
     These patterns reflect productive constructions.
     '''
     
-    def __init__(self, n, tf, **wsets):
-        quants = wsets['quants'] # word sets
-        preps = wsets['preps']
-        P = Positions(n, 'phrase_atom', tf).get
+    def __init__(self, n, tf, **kwargs):
+        quants = kwargs['quants'] # word sets
+        preps = kwargs['preps']
+        nominals = kwargs['noms']
+        context = kwargs.get('context', 'phrase_atom')
+        
+        # set up variables needed for processing / storing
+        P = Positions(n, context, tf).get
+        quants = quants
+        preps = preps
+        self.P = P
         self.kids = {}
         self.explain = {}
         
-        # set up vars
-        self.P = P
-        self.quants = quants
-        self.preps = preps
+        # set up evaluator with namespace as is
+        # NB: Evaluator will rely on variables in
+        # __init__, including P, quants, and preps
+        self.conddict = Evaluator(locals()).conddict
+        
+    def every(self):
+        '''
+        Store ALL relationships.
+        '''
+        self.construct()
+        self.adjacency()
+        self.prep_mod()
+        self.coordinate()
+        self.quantifiers()
+
+    def construct(self):
+        '''
+        Finds construct relations.
+        '''
+        P = self.P
         conddict = self.conddict
-        
-        # RETRIEVE RELATIONSHIPS
-        
-        # -- construct patterns --        
-        const = {
-                P(1): conddict(
+
+        const = (
+                (P(1), conddict(
                     "P(0,'st') == 'c'",
                     "P(1,'sp') != 'art'",
-                ),
-            
-                P(2): conddict(
+                )),
+
+                (P(2), conddict(
                     "P(0,'st') == 'c'",
                     "P(1,'sp') == 'art'",
-                ),
-        }
-        
+                )),
+        )
+
         self.kids['const'] = getnext(const)
         self.explain['const'] = const
-    
-        # -- adjacency patterns --
-        # NB: a subset of these are adjectives, but 
-        # this pattern does not yet parse down to that level.
+        return getnext(const)
+
+    def adjacency(self):
+        '''
+        Find adjacent nominals to this word.
+        NB: a subset of these are so-called adjectives, but 
+        this pattern does not yet parse down to that level.
+        '''
+        P = self.P
+        conddict = self.conddict
         
-        nominals = {'subs', 'nmpr', 'adjv', 'advb', 
-                    'prde', 'prps', 'prin', 'inrg'}
-        
-        # -- kid
-        adja = {
-            P(1): conddict(
+        adja = (
+            (P(1), conddict(
                 "P(1,'sp') in nominals",
                 "P(1,'nu') == P(0,'nu')",
                 "P(0,'st') == 'a'",
-            ),
-            
-            P(1): conddict(
+            )),
+
+            (P(1), conddict(
                 "P(1,'sp vt').issubset({'verb', 'ptcp', 'ptca'})",
                 "P(1,'nu') == P(0,'nu')",
                 "P(0,'st') == 'a'",
-            ),
-            
-            P(2): conddict(
+            )),
+
+            (P(2), conddict(
                 "P(1,'sp') == 'art'",
                 "P(2,'sp') in nominals",
                 "P(2,'nu') == P(0,'nu')",
                 "P(0,'st') == 'a'",
-            ),
-        }
-        
+            )),
+        )
+
         self.kids['adja'] = getnext(adja)
         self.explain['adja'] = adja
-        
-        # -- preposition mods -- 
-        # NB: noun + prep NOT prep + noun
-        
-        prep = {
-            P(1): conddict(
+        return getnext(adja)
+
+    def prep_mod(self):
+        '''
+        NB: noun + prep NOT prep + noun
+        '''
+        P = self.P
+        conddict = self.conddict
+
+        prep = (
+            (P(1), conddict(
                 "P(1) in preps"
-            )
-        }
-        
+            )),
+        )
+
         self.kids['prep'] = getnext(prep)
         self.explain['prep'] = prep
-        
-        # -- coordinate patterns -- 
-        # NB: kid == thismom AND thatkid
-        
-        coord = {
-    
-            P(2): conddict(
+        return getnext(prep)
+
+    def coordinate(self):
+        '''
+        gets coordinate patterns
+        NB: kid == thismom AND thatkid
+        '''
+        P = self.P
+        conddict = self.conddict
+
+        coord = (
+
+            (P(2), conddict(
+                "P(0) not in preps",
                 "P(1,'sp') == 'conj'",
-                "P(1, 'sp') in nominals",
-            ),
-            
-            P(3): conddict(
+                "P(2,'sp') in nominals",
+                "P(2) not in preps"
+            )),
+
+            (P(3), conddict(
+                "P(0) not in preps",
                 "P(1,'sp') == 'conj'",
-                "P(2, 'sp') == 'art'",
-            ),
-            
-            P(3): conddict(
+                "P(2,'sp') == 'art'",
+            )),
+
+            (P(3), conddict(
                 "P(1,'sp') == 'conj'",
                 "P(2) in preps",
                 "P(3,'sp') in nominals",
                 "P(-1) in preps",
-            ),
-            
-            P(4): conddict(
+            )),
+
+            (P(4), conddict(
                 "P(1,'sp') == 'conj'",
                 "P(2) in preps",
                 "P(3,'sp') == 'art'",
-                "P(-1, 'sp') == 'art'",
+                "P(-1,'sp') == 'art'",
                 "P(-2) in preps",
-            ),
-        }
-        
+            )),
+        )
+
         self.kids['coord'] = getnext(coord)
         self.explain['coord'] = coord
-    
-        # -- quantifier patterns --
-        quant = {
-            
-            P(1): conddict(
+        return getnext(coord)
+
+    def quantifiers(self):
+        '''
+        -- quantifier patterns --
+        '''
+        P = self.P
+        conddict = self.conddict
+
+        quant = (
+
+            (P(1), conddict(
                 "P(0) not in quants",
                 "P(1) in quants",
-            ),
+            )),
 
-            P(2): conddict(
+            (P(2), conddict(
                 "P(0) not in quants",
                 "P(2) in quants",
                 "P(1,'sp') == 'art'",
-            ),
+            )),
 
-            P(-1): conddict(
+            (P(-1), conddict(
                 "P(0) not in quants",
-                "P(-1) in custom_quants",
-            ),
-            
-            P(-2): conddict(
+                "P(-1) in quants",
+            )),
+
+            (P(-2), conddict(
                 "P(0) not in quants",
                 "P(-2) in quants",
                 "P(-1,'sp') == 'art'",
-            ),
-        }
-        
+            )),
+        )
+
         self.kids['quant'] = getnext(quant)
         self.explain['quant'] = quant
-        
-    def conddict(self, *conds):
-        '''
-        Convert string arguments to string:eval(string) dict.
-        '''
-        P = self.P
-        quants = self.quants
-        preps = self.preps
-        return {cond:eval(cond) for cond in conds}
+        return getnext(quant)

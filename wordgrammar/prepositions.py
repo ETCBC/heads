@@ -17,7 +17,8 @@ class Preps:
         # דרך is excluded since this is speculative
         self.preps |= set(w for w in F.otype.s('word')
                              if F.ls.v(w) == 'ppre'
-                             and F.lex.v(w) != 'DRK/')
+                             and F.lex.v(w) != 'DRK/'
+                         )
     
         
         # -- context-specific prepositions --
