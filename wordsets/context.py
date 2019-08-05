@@ -5,6 +5,27 @@ environment surrounding a given node.
 
 from positions import Positions, Getter, Evaluator
 
+def get_quantified(word, tf):
+    '''
+    Recursively calls down a quantifier chain until
+    finding a quantified word.
+    '''
+
+    P = Positions(word, 'phrase_atom', tf).get
+
+    target = (
+        lambda n: P(n), 
+        lambda n: P(n) not in wsets.quants,
+        lambda n: P(n, 'sp') in wsets.nominals,
+    )
+
+    if all(cond(0) for cond in target):
+        return word
+    elif all(cond(P(1)) for cond in target):
+        return P(1)
+    else:
+        return get_quantified(P(1))
+
 def getnext(ctuple):
     '''
     Returns first valid node from a {node:{string:boolean}} dict
@@ -33,10 +54,10 @@ class Mom:
         quants = kwargs['quants'] # word sets
         preps = kwargs['preps']
         nominals = kwargs['noms']
-        context = kwargs.get('context', 'phrase_atom')
+        self.context = kwargs.get('context', 'phrase_atom')
         
         # set up variables needed for processing / storing
-        P = Positions(n, context, tf).get
+        P = Positions(n, self.context, tf).get
         quants = quants
         preps = preps
         self.P = P
@@ -48,7 +69,7 @@ class Mom:
         # __init__, including P, quants, and preps
         self.conddict = Evaluator(locals()).conddict
         
-    def every(self):
+    def analyze(self):
         '''
         Store ALL relationships.
         '''

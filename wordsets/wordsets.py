@@ -43,11 +43,11 @@ class WordSets:
         self.report('\tdone')
         
         self.report('processing conjunctions...')
-        self.conjs = Conjunction(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
+        self.conj = Conjunction(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
         self.report('\tdone')
         
         self.report('processing constructs...')
-        self.consts = Construct(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
+        self.cons = Construct(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
         self.report('\tdone')
         
         #self.sim = Sim(tf).get
