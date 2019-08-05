@@ -5,24 +5,31 @@ environment surrounding a given node.
 
 from positions import Positions, Getter, Evaluator
 
-def get_quantified(word, tf):
+def get_quantified(word, tf, **wsets):
     '''
     Recursively calls down a quantifier chain until
     finding a quantified word.
     '''
+    
+    quants, noms = wsets['quants'], wsets['noms']
 
     P = Positions(word, 'phrase_atom', tf).get
 
     target = (
         lambda n: P(n), 
-        lambda n: P(n) not in wsets.quants,
-        lambda n: P(n, 'sp') in wsets.nominals,
+        lambda n: P(n) not in quants,
+        lambda n: P(n, 'sp') in noms,
     )
 
+    # check this word
     if all(cond(0) for cond in target):
         return word
+    
+    # check next word
     elif all(cond(P(1)) for cond in target):
         return P(1)
+    
+    # move up one
     else:
         return get_quantified(P(1))
 
@@ -113,21 +120,13 @@ class Mom:
         
         adja = (
             (P(1), conddict(
-                "P(1,'sp') in nominals",
-                "P(1,'nu') == P(0,'nu')",
-                "P(0,'st') == 'a'",
-            )),
-
-            (P(1), conddict(
-                "P(1,'sp vt').issubset({'verb', 'ptcp', 'ptca'})",
-                "P(1,'nu') == P(0,'nu')",
+                "P(1) in nominals",
                 "P(0,'st') == 'a'",
             )),
 
             (P(2), conddict(
                 "P(1,'sp') == 'art'",
-                "P(2,'sp') in nominals",
-                "P(2,'nu') == P(0,'nu')",
+                "P(2) in nominals",
                 "P(0,'st') == 'a'",
             )),
         )
@@ -166,7 +165,7 @@ class Mom:
             (P(2), conddict(
                 "P(0) not in preps",
                 "P(1,'sp') == 'conj'",
-                "P(2,'sp') in nominals",
+                "P(2) in nominals",
                 "P(2) not in preps"
             )),
 
@@ -179,7 +178,7 @@ class Mom:
             (P(3), conddict(
                 "P(1,'sp') == 'conj'",
                 "P(2) in preps",
-                "P(3,'sp') in nominals",
+                "P(3) in nominals",
                 "P(-1) in preps",
             )),
 

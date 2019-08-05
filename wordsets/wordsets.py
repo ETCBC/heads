@@ -3,20 +3,22 @@ This module delivers a series of sets
 which are needed to process word relations
 and semantic heads. This includes:
 
+    • accent classification sets
+    • custom nominal sets
     • custom quantifier sets
     • custom preposition sets
-    • valid coordinate pair sets
-    • valid adjective pair sets
+    • attested coordinate pair sets
+    • attested construct pair sets
     
 The sets are built by querying the corpus
 for matching patterns. 
 '''
 
-import os
+from accents import Accents
+from nominals import Nominals
 from quantifiers import Quants
 from prepositions import Preps
 from pairs import Conjunction, Construct
-from accents import Accents
 
 class WordSets:
     '''
@@ -27,11 +29,12 @@ class WordSets:
         
         self.silent = silent
         
-        self.nominals = {'subs', 'nmpr', 'adjv', 'advb', 
-                         'prde', 'prps', 'prin', 'inrg'}
-        
         self.report('processing accents...')
         self.accents = Accents(tf)
+        self.report('\tdone')
+        
+        self.report('processing nominals...')
+        self.noms = Nominals(tf).nominals
         self.report('\tdone')
         
         self.report('processing quants...')
@@ -42,12 +45,18 @@ class WordSets:
         self.preps = Preps(tf).preps
         self.report('\tdone')
         
+        base_sets = {
+            'quants':self.quants,
+            'preps':self.preps,
+            'noms': self.noms
+        }
+        
         self.report('processing conjunctions...')
-        self.conj = Conjunction(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
+        self.conj = Conjunction(tf, **base_sets)
         self.report('\tdone')
         
         self.report('processing constructs...')
-        self.cons = Construct(tf, quants=self.quants, preps=self.preps, noms=self.nominals)
+        self.cons = Construct(tf, **base_sets)
         self.report('\tdone')
         
         #self.sim = Sim(tf).get
