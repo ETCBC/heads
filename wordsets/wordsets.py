@@ -14,11 +14,16 @@ The sets are built by querying the corpus
 for matching patterns. 
 '''
 
+import pickle
+from tf.app import use
 from accents import Accents
 from nominals import Nominals
 from quantifiers import Quants
 from prepositions import Preps
 from pairs import Conjunction, Construct
+from context import Relas
+
+output = 'wsets.pickle'
 
 class WordSets:
     '''
@@ -51,16 +56,45 @@ class WordSets:
             'noms': self.noms
         }
         
-        self.report('processing conjunctions...')
+        self.report('processing conjunction pairs...')
         self.conj = Conjunction(tf, **base_sets)
         self.report('\tdone')
         
-        self.report('processing constructs...')
+        self.report('processing construct pairs...')
         self.cons = Construct(tf, **base_sets)
         self.report('\tdone')
         
-        #self.sim = Sim(tf).get
-        
+        self.report('Preparing mom//kid relations')
+        relas = Relas(tf, base_sets)
+        self.mom = relas.mom
+        self.kid = relas.kid
+        self.report('\tdone')
+         
     def report(self, mssg):
         if not self.silent:
             print(mssg)
+
+
+# set up TF 
+print('Setting up Text-Fabric...')
+A = use('bhsa', hoist=globals(), silent=True)
+print('\tdone...')
+
+print('-- RUNNING WORDSETS --')
+wsets = WordSets(A, silent=False)
+print('-- WSETS COMPLETE --')
+
+print('Pickeling word sets...')
+export = {
+    'preps': wsets.preps,
+    'quants': wsets.quants,
+    'accent_type': wsets.accents.accenttype,
+    'conj_pairs': wsets.conj.pairs,
+    'cons_pairs': wsets.cons.pairs,
+    'mom': wsets.mom,
+    'kid': wsets.kid,
+}
+
+pickle.dump(export, open(output, 'wb'))
+
+print('!*!*!*! DONE !*!*!*!')

@@ -3,6 +3,7 @@ Classes that collect data on the grammatical
 environment surrounding a given node.
 '''
 
+import collections
 from positions import Positions, Getter, Evaluator
 
 def get_quantified(word, tf, **wsets):
@@ -230,3 +231,17 @@ class Mom:
         self.kids['quant'] = getnext(quant)
         self.explain['quant'] = quant
         return getnext(quant)
+    
+class Relas:
+    '''
+    Provides mom-kid relations using the Mom class.
+    '''
+    def __init__(self, tf, wsets):
+        self.mom = collections.defaultdict(lambda: collections.defaultdict())
+        self.kid = collections.defaultdict(lambda: collections.defaultdict())
+        for w in tf.api.F.otype.s('word'):
+            momma = Mom(w, tf, **wsets)
+            momma.analyze()
+            self.kid[w].update(momma.kids)
+            for rela, kid in momma.kids.items():
+                self.mom[kid].update({rela:w})
