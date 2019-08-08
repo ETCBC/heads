@@ -7,16 +7,23 @@ class Nominals:
     It also includes participles.
     '''
     
-    def __init__(self, tf):
+    def __init__(self, tf, **wsets):
         
         F = tf.api.F
-
+        preps = wsets['preps']
+        
         sps = {'subs', 'nmpr', 'adjv', 'advb', 
                'prde', 'prps', 'prin', 'inrg'}
         
         self.nominals = set()
         
         for w in F.otype.s('word'):
+            
+            # skip prepositional words
+            if w in preps:
+                continue
+                
+            # add nominals
             if F.sp.v(w) in sps:
                 self.nominals.add(w)
             elif (F.sp.v(w) == 'verb' and F.vt.v(w) in {'ptcp', 'ptca'}):

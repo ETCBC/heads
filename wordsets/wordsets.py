@@ -38,16 +38,16 @@ class WordSets:
         self.accents = Accents(tf)
         self.report('\tdone')
         
-        self.report('processing nominals...')
-        self.noms = Nominals(tf).nominals
-        self.report('\tdone')
-        
         self.report('processing quants...')
         self.quants = Quants(tf).quants
         self.report('\tdone')
         
         self.report('processing preps...')
         self.preps = Preps(tf).preps
+        self.report('\tdone')
+        
+        self.report('processing nominals...')
+        self.noms = Nominals(tf, preps=self.preps).nominals
         self.report('\tdone')
         
         base_sets = {
@@ -64,7 +64,7 @@ class WordSets:
         self.cons = Construct(tf, **base_sets)
         self.report('\tdone')
         
-        self.report('Preparing mom//kid relations')
+        self.report('processing mom//kid relations...')
         relas = Relas(tf, base_sets)
         self.mom = relas.mom
         self.kid = relas.kid
@@ -80,15 +80,17 @@ print('Setting up Text-Fabric...')
 A = use('bhsa', hoist=globals(), silent=True)
 print('\tdone...')
 
-print('-- RUNNING WORDSETS --')
+print('\n-- RUNNING WORDSETS --\n')
 wsets = WordSets(A, silent=False)
-print('-- WSETS COMPLETE --')
+print('\n-- WSETS COMPLETE --')
 
-print('Pickeling word sets...')
+print('\npickleing word sets...')
 export = {
+    'noms': wsets.noms,
     'preps': wsets.preps,
     'quants': wsets.quants,
     'accent_type': wsets.accents.accenttype,
+    'mwords': wsets.accents.mwords,
     'conj_pairs': wsets.conj.pairs,
     'cons_pairs': wsets.cons.pairs,
     'mom': wsets.mom,
@@ -97,4 +99,4 @@ export = {
 
 pickle.dump(export, open(output, 'wb'))
 
-print('!*!*!*! DONE !*!*!*!')
+print('\n!*!*!*! DONE !*!*!*!')

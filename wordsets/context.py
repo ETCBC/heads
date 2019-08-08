@@ -237,9 +237,14 @@ class Relas:
     Provides mom-kid relations using the Mom class.
     '''
     def __init__(self, tf, wsets):
-        self.mom = collections.defaultdict(lambda: collections.defaultdict())
-        self.kid = collections.defaultdict(lambda: collections.defaultdict())
+        self.mom = collections.defaultdict(dict)
+        self.kid = collections.defaultdict(dict)
+        
         for w in tf.api.F.otype.s('word'):
+            
+            if w not in wsets['noms']:
+                continue
+            
             momma = Mom(w, tf, **wsets)
             momma.analyze()
             self.kid[w].update(momma.kids)
