@@ -113,6 +113,16 @@ class Evaluator:
         return eval(cond, self.namespace)
     def conddict(self, *conds):
         return {cond:eval(cond, self.namespace) for cond in conds}
+    def update(self, namespace):
+        self.namespace.update(namespace)
+    
+def getnext(ctuple):
+    '''
+    Returns first valid node from a {node:{string:boolean}} dict
+    where all booleans must == True.
+    '''
+    results = [pos for pos, conds in ctuple if all(conds.values())]
+    return Getter(results)[0]
     
 def showconds(conddict):
     '''

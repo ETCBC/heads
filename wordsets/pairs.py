@@ -29,7 +29,7 @@ class Conjunction:
 
             # skip words already visited in a chain
             # or those that are not nominal parts of speech
-            if w in covered or F.sp.v(w) not in wsets['noms']:
+            if w in covered or w not in wsets['noms']:
                 continue
 
             # check for chain
@@ -77,7 +77,7 @@ class Construct:
         for word in set(F.otype.s('word')) & set(F.st.s('c')):
         
             # skip non-nominal words
-            if F.sp.v(word) not in wsets['noms']:
+            if word not in wsets['noms']:
                 continue
         
             construct = Mom(word, tf, **wsets).construct()

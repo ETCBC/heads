@@ -4,43 +4,11 @@ environment surrounding a given node.
 '''
 
 import collections
-from positions import Positions, Getter, Evaluator
 
-def get_quantified(word, tf, **wsets):
-    '''
-    Recursively calls down a quantifier chain until
-    finding a quantified word.
-    '''
-    
-    quants, noms = wsets['quants'], wsets['noms']
-
-    P = Positions(word, 'phrase_atom', tf).get
-
-    target = (
-        lambda n: P(n), 
-        lambda n: P(n) not in quants,
-        lambda n: P(n, 'sp') in noms,
-    )
-
-    # check this word
-    if all(cond(0) for cond in target):
-        return word
-    
-    # check next word
-    elif all(cond(P(1)) for cond in target):
-        return P(1)
-    
-    # move up one
-    else:
-        return get_quantified(P(1))
-
-def getnext(ctuple):
-    '''
-    Returns first valid node from a {node:{string:boolean}} dict
-    where all booleans must == True.
-    '''
-    results = [pos for pos, conds in ctuple if all(conds.values())]
-    return Getter(results)[0]
+if __name__ == 'main':
+    from positions import Positions, Getter, Evaluator, getnext
+else:
+    from .positions import Positions, Getter, Evaluator, getnext
     
 class Mom:
     '''
@@ -122,13 +90,13 @@ class Mom:
         adja = (
             (P(1), conddict(
                 "P(1) in nominals",
-                "P(0,'st') == 'a'",
+                "P(0,'st') in {'a', 'NA'}",
             )),
 
             (P(2), conddict(
                 "P(1,'sp') == 'art'",
                 "P(2) in nominals",
-                "P(0,'st') == 'a'",
+                "P(0,'st') in {'a', 'NA'}",
             )),
         )
 
@@ -236,7 +204,7 @@ class Relas:
     '''
     Provides mom-kid relations using the Mom class.
     '''
-    def __init__(self, tf, wsets):
+    def __init__(self, tf, **wsets):
         self.mom = collections.defaultdict(dict)
         self.kid = collections.defaultdict(dict)
         

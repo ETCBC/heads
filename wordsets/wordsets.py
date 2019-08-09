@@ -21,7 +21,6 @@ from nominals import Nominals
 from quantifiers import Quants
 from prepositions import Preps
 from pairs import Conjunction, Construct
-from context import Relas
 
 output = 'wsets.pickle'
 
@@ -62,12 +61,6 @@ class WordSets:
         
         self.report('processing construct pairs...')
         self.cons = Construct(tf, **base_sets)
-        self.report('\tdone')
-        
-        self.report('processing mom//kid relations...')
-        relas = Relas(tf, base_sets)
-        self.mom = relas.mom
-        self.kid = relas.kid
         self.report('\tdone')
          
     def report(self, mssg):
