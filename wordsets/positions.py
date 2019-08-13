@@ -62,7 +62,7 @@ class Positions:
             
         get_pos = self.n
         for count in range(0, abs(position)):
-            get_pos = Getter(method(get_pos, self.thisotype))[0] or 0
+            get_pos = next(iter(method(get_pos, self.thisotype)), 0)
         
         # return None, empty string, or empty set if beyond boundaries
         if get_pos not in positions:

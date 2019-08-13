@@ -5,7 +5,7 @@
 @source=see the creation notebooks at https://github.com/etcbc/heads
 @valueType=str
 @writtenBy=Text-Fabric
-@dateWritten=2019-04-15T17:58:55Z
+@dateWritten=2019-08-13T15:12:30Z
 
 prep
 5	prep
@@ -9845,8 +9845,10 @@ prep
 45731	prep
 45734	quant
 45737	prep
+45740	quant
 45743	prep
 45747	quant
+45751	quant
 45755	prep
 45757	quant
 45760	prep
@@ -9854,6 +9856,7 @@ prep
 quant
 quant
 45781	prep
+quant
 45785	prep
 45787	prep
 45790	prep
@@ -9894,7 +9897,8 @@ prep
 45918	prep
 45923	quant
 quant
-45929	quant
+45928	quant
+quant
 45931	quant
 45935	quant
 45937	quant
@@ -11090,6 +11094,7 @@ quant
 50903	quant
 50905	prep
 50910	prep
+50913	quant
 50916	prep
 50920	prep
 quant
@@ -12142,8 +12147,10 @@ prep
 55143	prep
 55145	prep
 55148	prep
-55156	prep
-55161	prep
+55155	quant
+prep
+55160	quant
+prep
 55164	prep
 55166	prep
 55178	prep
@@ -20432,8 +20439,10 @@ prep
 89438	prep
 89442	prep
 89445	prep
+quant
 89450	prep
 89457	prep
+quant
 89462	quant
 89464	prep
 89466	quant
@@ -20507,6 +20516,7 @@ quant
 89650	prep
 89654	prep
 89657	prep
+quant
 89664	prep
 89674	prep
 89677	quant
@@ -20529,6 +20539,7 @@ quant
 quant
 quant
 89710	prep
+quant
 89714	prep
 89717	quant
 prep
@@ -28466,6 +28477,7 @@ prep
 124856	prep
 124859	quant
 124861	prep
+quant
 124865	prep
 124868	prep
 124871	prep
@@ -42289,6 +42301,7 @@ prep
 189225	prep
 189227	prep
 189232	prep
+189236	quant
 189241	prep
 189248	prep
 189251	prep
@@ -81478,6 +81491,7 @@ prep
 prep
 387235	prep
 387238	prep
+quant
 387242	prep
 387253	quant
 387256	prep
@@ -82716,6 +82730,7 @@ quant
 394576	prep
 394581	prep
 394585	prep
+quant
 394588	quant
 394590	prep
 394594	quant
@@ -82764,6 +82779,7 @@ prep
 394738	prep
 394741	prep
 394744	prep
+quant
 394748	prep
 394751	prep
 394754	prep
