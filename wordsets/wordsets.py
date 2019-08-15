@@ -86,8 +86,6 @@ export = {
     'mwords': wsets.accents.mwords,
     'conj_pairs': wsets.conj.pairs,
     'cons_pairs': wsets.cons.pairs,
-    'mom': wsets.mom,
-    'kid': wsets.kid,
 }
 
 pickle.dump(export, open(output, 'wb'))

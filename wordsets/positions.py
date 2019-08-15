@@ -23,13 +23,13 @@ class Getter:
     def __getitem__(self, key):
         try:
             return self.iterable[key]
-        except IndexError:
+        except:
             return self.default
         
     def index(self, i):
         try:
             return self.iterable.index(i)
-        except ValueError:
+        except:
             return self.default
 
 class Positions:
@@ -44,14 +44,18 @@ class Positions:
     def __init__(self, n, context, tf=None):
         self.tf = tf.api # make TF classes avail
         self.n = n
-        self.thisotype = tf.api.F.otype.v(n)
-        self.context = self.get_context(context)
+        self.thisotype = tf.api.F.otype.v(n) if n else ''
+        self.context = self.get_context(context) if n else 0
     
     def get(self, position, features=None):
         '''
         Get a node (+/-)N positions away, 
         with an option to get values for specified features.
         '''
+        
+        if not self.n:
+            return None
+        
         L, Fs = self.tf.L, self.tf.Fs # TF classes
         positions = set(L.d(self.context, self.thisotype))
         

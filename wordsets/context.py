@@ -5,11 +5,8 @@ environment surrounding a given node.
 
 import collections
 
-if __name__ == 'main':
-    from positions import Positions, Getter, Evaluator, getnext
-else:
-    from .positions import Positions, Getter, Evaluator, getnext
-    
+from positions import Positions, Getter, Evaluator, getnext
+   
 class Mom:
     '''
     Identifies syntactic "relations"*

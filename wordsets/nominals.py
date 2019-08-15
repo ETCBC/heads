@@ -12,8 +12,7 @@ class Nominals:
         F = tf.api.F
         preps = wsets['preps']
         
-        sps = {'subs', 'nmpr', 'adjv', 'advb', 
-               'prde', 'prps', 'prin', 'inrg'}
+        sps = {'subs', 'nmpr', 'adjv', 'advb'}
         
         self.nominals = set()
         
