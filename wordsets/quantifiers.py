@@ -13,7 +13,6 @@ class Quants:
         
         quants = set()
         quants |= set(F.ls.s('card')) & set(F.otype.s('word'))
-        quants |= set(F.ls.s('ordn')) & set(F.otype.s('word')) # NB! FIX: NOT STRICTLY A QUANT!
 
         # -- contextual cases -- 
         
