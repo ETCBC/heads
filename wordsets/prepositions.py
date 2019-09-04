@@ -10,7 +10,7 @@ class Preps:
     
     def __init__(self, tf):
         
-        F = tf.api.F
+        F, L = tf.api.F, tf.api.L
         self.preps = set(w for w in F.otype.s('word') if F.pdp.v(w)=='prep')        
         
         # -- ETCBC "potential preps" --
@@ -122,6 +122,18 @@ class Preps:
                 (F.lex.v(construct) in rosh_kids
                     or P(1, 'ls') == 'card')
             ]
+            if all(conds):
+                self.preps.add(w)
+                continue
+                
+            # ETSEM (time phrase)
+            
+            conds = [
+                P(0,'lex') == '<YM/',
+                P(0,'st') == 'c',
+                F.function.v(L.u(w,'phrase')[0]) == 'Time'
+            ]
+            
             if all(conds):
                 self.preps.add(w)
                 continue
