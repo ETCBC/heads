@@ -103,7 +103,47 @@ class Positions:
             raise Exception('Provided context is smaller than the provided node!')
         else:
             return Getter(L.u(self.n, otype))[0]
+
+class Walker:    
+    '''
+    Walks a direction forward or backward in a 
+    context until encountering a word that meets 
+    a set of conds. Returns that word.
+    Similar to Positions.
+    '''
+    
+    def __init__(self, n, context, tf=None):
+        tf = tf.api
+        thisotype = tf.F.otype.v(n) if n else ''
+        context = tf.L.u(n, context)[0]
+        self.positions = list(tf.L.d(context, thisotype))
+        self.index = self.positions.index(n)
         
+    def ahead(self, val_funct):
+        '''
+        Get first forward node that function == True.
+        '''
+        path = self.positions[self.index+1:]
+        return self.firstresult(path, val_funct)
+            
+    def back(self, val_funct):
+        '''
+        Get first backward node that function == True.
+        '''
+        path = self.positions[:self.index]
+        path.reverse()
+        return self.firstresult(path, val_funct)
+        
+    def firstresult(self, path, val_funct):
+        '''
+        return first node in loop where funct == True
+        '''
+        for node in path:
+            if val_funct(node):
+                return node
+        
+    
+    
 class Evaluator:
     '''
     Evaluates strings within a prepared namespace.
