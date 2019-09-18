@@ -105,44 +105,88 @@ class Positions:
             return Getter(L.u(self.n, otype))[0]
 
 class Walker:    
-    '''
-    Walks a direction forward or backward in a 
-    context until encountering a word that meets 
-    a set of conds. Returns that word.
-    Similar to Positions.
-    '''
+    """Prepares paths from a source TF node to a target node.
+    
+    Supplies methods to walk forward or backward in a context until 
+    encountering a TF node that meets a set of conds.
+    
+    Methods:
+        ahead: Walk ahead from start node to target.
+        back: Walk back from start node to target.
+        firstresult: Return the first node in a path that
+            returns True for a supplied function
+    """
     
     def __init__(self, n, context, tf=None):
+        """Initialize paths for a node.
+        Arguments:
+            n: Text-Fabric corpus node
+            context: otype string of the supplied node's context to lookup
+            tf: Running instance of Text-Fabric corpus
+        """
         tf = tf.api
         thisotype = tf.F.otype.v(n) if n else ''
         context = tf.L.u(n, context)[0]
         self.positions = list(tf.L.d(context, thisotype))
         self.index = self.positions.index(n)
         
-    def ahead(self, val_funct):
-        '''
-        Get first forward node that function == True.
-        '''
-        path = self.positions[self.index+1:]
-        return self.firstresult(path, val_funct)
+    def ahead(self, val_funct, stop=None, go=None):
+        """Walk ahead to node.
+        
+        Args:
+            val_funct: a function that accepts a node argument
+                and returns Boolean. This determines which word
+                to return.
+            stop: a function that accepts a node argument and
+                returns Boolean. Determines whether to interrupt 
+                the walk and return None.
+            go: opposite of stop, a function that accepts a node
+                argument and returns Boolean. Determines whether
+                to keep going in a walk.
             
-    def back(self, val_funct):
-        '''
-        Get first backward node that function == True.
-        '''
+        Returns:
+            integer which corresponds to a Text-Fabric node
+        """
+        path = self.positions[self.index+1:]
+        stop = stop or (lambda n: False)
+        go = go or (lambda n: True)
+        return self.firstresult(path, val_funct, stop, go)
+            
+    def back(self, val_funct, stop=None, go=None):
+        """Walk back to node.
+        
+        Args:
+            val_funct: a function that accepts a TF node argument
+                and returns Boolean. Determines which word to return
+                in the walk.
+            stop: a function that accepts a TF node argument and
+                returns Boolean. Determines whether to interrupt 
+                the walk and return None.
+            go: opposite of stop, a function that accepts a node
+                argument and returns Boolean. Determines whether
+                to keep going in a walk.
+                
+        Returns:
+            integer which corresponds to a Text-Fabric node
+        """
         path = self.positions[:self.index]
         path.reverse()
-        return self.firstresult(path, val_funct)
+        stop = stop or (lambda n: False)
+        go = go or (lambda n: True)
+        return self.firstresult(path, val_funct, stop, go)
         
-    def firstresult(self, path, val_funct):
-        '''
-        return first node in loop where funct == True
-        '''
+    def firstresult(self, path, val_funct, stop, go):
+        """Return first node in a loop where val_funct(node) == True."""
         for node in path:
+            # do matches
             if val_funct(node):
                 return node
-        
-    
+            # do interrupts on go
+            elif not go(node):
+                break
+            # do interrupts on stop
+            elif stop(node):
+                break
     
 class Evaluator:
     '''
