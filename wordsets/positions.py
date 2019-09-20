@@ -10,7 +10,6 @@ class Getter:
     A class to safely index beyond the limits of
     an iterable with a default returned.
     Like dict.get but for iterables.
-
     '''
     
     def __init__(self, iterable, default=None):
