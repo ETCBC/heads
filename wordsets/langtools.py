@@ -1,108 +1,147 @@
-'''
-The Getter class provides list-like interactions
-with safe-indexing for indices lying beyond the list's limits.
-The Positions class delivers positional
-data on demand when instanced on a TF node.
-'''
+"""
+Language Tools with Text-Fabric
 
-class Getter:
-    '''
-    A class to safely index beyond the limits of
-    an iterable with a default returned.
-    Like dict.get but for iterables.
-    '''
-    
-    def __init__(self, iterable, default=None):
-        self.iterable = iterable
-        self.default = default
-        
-    def __iter__(self):
-        for i in self.iterable:
-            yield i
-        
-    def __getitem__(self, key):
-        try:
-            return self.iterable[key]
-        except:
-            return self.default
-        
-    def index(self, i):
-        try:
-            return self.iterable.index(i)
-        except:
-            return self.default
+This module contains classes to be used
+with a Text-Fabric corpus instance.
+"""
 
 class Positions:
-    '''
-    For a given node, provides access to nodes
-    that are (+/-)N positions away in terms of 
-    node adjacency within a given context.
-    The context must be a nodeType that is larger
-    than the supplied node.
-    '''
+    """Access positions around a node in a context.
     
-    def __init__(self, n, context, tf=None):
-        self.tf = tf.api # make TF classes avail
+    For a given origin node, provides data on another node
+    that is (+/-)N positions away in a context.
+    """
+    
+    def __init__(self, n, context, tf, order='slot'):
+        """Prepare context and positions for a supplied TF node.
+        
+        Arguments:
+            n: an integer that is a Text-Fabric node that serves
+                as the origin node.
+            context: a string that specifies a context in which
+                to search for a position relative to origin node.
+            tf: an instance of Text-Fabric with a loaded corpus.
+            order: The method of order to use for the search.
+                Options are "slot" or "node."
+        """
+        self.tf = tf.api
         self.n = n
-        self.thisotype = tf.api.F.otype.v(n) if n else ''
-        self.context = self.get_context(context) if n else 0
+        self.method = order
+        self.thisotype = tf.api.F.otype.v(n)
+        context = tf.api.L.u(n, context)[0]
+        self.positions = tf.api.L.d(context, self.thisotype)     
+        if method == 'node':
+            self.originindex = self.positions.index(n)
     
-    def get(self, position, features=None):
-        '''
-        Get a node (+/-)N positions away, 
-        with an option to get values for specified features.
-        '''
+    def nodepos(self, position):
+        """Get position using node order.
         
-        if not self.n:
-            return None
-        
-        L, Fs = self.tf.L, self.tf.Fs # TF classes
-        positions = set(L.d(self.context, self.thisotype))
-        
-        if position < 0:
-            method = L.p
-        else:
-            method = L.n
+        !CAUTION!
+            This method should only be used with
+            linguistic units known to be non-overlapping. 
+            A "slot" object is a good example for which this 
+            method might be used. 
             
+            For example, given a phrase with another embedded phrase:
+            
+                > [1, 2, 3, [4, 5], 6]
+                
+            this method will indicate that slots 3 and 6 are adjacent
+            with respect to the context. This is OK because we know 
+            3 and 6 do not embed one another.
+            By contrast, TF locality methods will mark 3 and 4 as adjacent.
+            
+        Arguments: 
+            position: integer that is the position to find
+                from the origin node
+        """
+        # use index in positions to get adjacent node
+        # return None when exceeding bounds of context
+        pos_index = self.originindex + position
+        pos_index = pos_index if (pos_index > -1) else None
+        try:
+            return self.positions[pos_index]
+        except (IndexError, TypeError):
+            return None
+    
+    def slotpos(self, position):
+        """Get position using slot order.
+        
+        This method is ideal for nodes that may overlap.
+        Uses TF locality methods. These methods use
+        pre-calculated tables to define whether two
+        nodes are adjacent or not. The TF definition 
+        of order is as follows:
+            > if two objects are intersecting, 
+            > but none embeds the other, 
+            > the one with the smallest slot that 
+            > does not occur in the other, comes first.
+            > (https://annotation.github.io/text-fabric/Api/Nodes/)
+            
+        For example, given a phrase with another embedded phrase:
+            
+            > [1, 2, 3, [4, 5], 6]
+        
+        this method will indicate that slots 3 and 4 are adjacent.
+        
+        Arguments: 
+            position: integer that is the position to find
+                from the origin node
+        """
+        
+        L = self.tf.L
+
+        # determine which TF method to use
+        if position < 0:
+            move = L.p
+        else:
+            move = L.n
+            
+        # iterate the number of steps indicated by position
+        # call move method for each step and set result to next position
         get_pos = self.n
         for count in range(0, abs(position)):
-            get_pos = next(iter(method(get_pos, self.thisotype)), 0)
+            get_pos = next(iter(move(get_pos, self.thisotype)), 0)
+            
+        if get_pos in self.positions:
+            return get_pos
+        else:
+            return None
+    
+    def get(self, position, features=None):
+        """Get data on node (+/-)N positions away. 
         
-        # return None, empty string, or empty set if beyond boundaries
-        if get_pos not in positions:
+        Arguments:
+            position: a positive or negative integer that 
+                tells how far away the target node is from source.
+            features: a feature string or set to return based
+                from the target node. If features not specified,
+                will return the node itself.
+        """
+            
+        # get next position based on method
+        if self.method == 'slot':
+            get_pos = slotpos(position)
+        elif self.method == 'node':
+            get_pos = nodepos(position)
+                
+        # return requested data
+        if get_pos:
+            if not features: 
+                return get_pos
+            elif type(features) == str:
+                return Fs(features).v(get_pos)
+            elif type(features) == set:
+                return set(Fs(feat).v(get_pos) for feat in features)
+            
+        # return empty data
+        elif get_pos not in self.positions:
             if not features:
                 return None
-            elif len(features.split())==1:
+            elif type(features) == str:
                 return ''
-            else:
+            elif type(features) == set:
                 return set()
-        
-        # simple node return
-        if not features:
-            return get_pos
-        
-        # give single feature
-        if len(features.split())==1:
-            return Fs(features).v(get_pos)
-        
-        # give pl features
-        elif features:
-            feats = set()
-            for f in features.split():
-                feats.add(Fs(f).v(get_pos))
-            return feats
-    
-    def get_context(self, otype):
-        '''
-        Returns a requested context node.
-        '''
-        otypeRank = self.tf.otypeRank # TF classes
-        L = self.tf.L
-        
-        if otypeRank[self.thisotype] > otypeRank[otype]:
-            raise Exception('Provided context is smaller than the provided node!')
-        else:
-            return Getter(L.u(self.n, otype))[0]
 
 class Walker:    
     """Prepares paths from a source TF node to a target node.
