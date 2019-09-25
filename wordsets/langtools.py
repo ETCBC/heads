@@ -30,7 +30,7 @@ class Positions:
         self.thisotype = tf.api.F.otype.v(n)
         context = tf.api.L.u(n, context)[0]
         self.positions = tf.api.L.d(context, self.thisotype)     
-        if method == 'node':
+        if order == 'node':
             self.originindex = self.positions.index(n)
     
     def nodepos(self, position):
@@ -108,7 +108,7 @@ class Positions:
         else:
             return None
     
-    def get(self, position, features=None):
+    def get(self, position, *features):
         """Get data on node (+/-)N positions away. 
         
         Arguments:
@@ -121,26 +121,27 @@ class Positions:
             
         # get next position based on method
         if self.method == 'slot':
-            get_pos = slotpos(position)
+            get_pos = self.slotpos(position)
         elif self.method == 'node':
-            get_pos = nodepos(position)
-                
+            get_pos = self.nodepos(position)
+    
         # return requested data
         if get_pos:
+            Fs = self.tf.Fs
             if not features: 
                 return get_pos
-            elif type(features) == str:
-                return Fs(features).v(get_pos)
-            elif type(features) == set:
+            elif len(features) == 1:
+                return Fs(features[0]).v(get_pos)
+            elif len(features) > 1:
                 return set(Fs(feat).v(get_pos) for feat in features)
             
         # return empty data
         elif get_pos not in self.positions:
             if not features:
                 return None
-            elif type(features) == str:
+            elif len(features) == 1:
                 return ''
-            elif type(features) == set:
+            elif len(features) > 1:
                 return set()
 
 class Walker:    
