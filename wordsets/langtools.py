@@ -170,57 +170,86 @@ class Walker:
         self.positions = list(tf.L.d(context, thisotype))
         self.index = self.positions.index(n)
         
-    def ahead(self, val_funct, stop=None, go=None):
+    def ahead(self, val_funct, **kwargs):
         """Walk ahead to node.
-        
+    
+        Returns:
+            Integer which corresponds to a Text-Fabric node or 
+            output of function if output=True.
+            
         Args:
             val_funct: a function that accepts a node argument
                 and returns Boolean. This determines which word
-                to return.
+                to return.          
+                
+        *Kwargs:
             stop: a function that accepts a node argument and
                 returns Boolean. Determines whether to interrupt 
                 the walk and return None.
             go: opposite of stop, a function that accepts a node
                 argument and returns Boolean. Determines whether
                 to keep going in a walk.
-            
-        Returns:
-            integer which corresponds to a Text-Fabric node
+            output: return output of the val_funct instead of the
+                node itself.
         """
         path = self.positions[self.index+1:]
-        stop = stop or (lambda n: False)
-        go = go or (lambda n: True)
-        return self.firstresult(path, val_funct, stop, go)
+        return self.firstresult(path, val_funct, **kwargs)
             
-    def back(self, val_funct, stop=None, go=None):
+    def back(self, val_funct, **kwargs):
         """Walk back to node.
         
+        Returns:
+            Integer which corresponds to a Text-Fabric node or 
+            output of function if output=True.
+            
         Args:
-            val_funct: a function that accepts a TF node argument
-                and returns Boolean. Determines which word to return
-                in the walk.
-            stop: a function that accepts a TF node argument and
+            val_funct: a function that accepts a node argument
+                and returns Boolean. This determines which word
+                to return.          
+                
+        *Kwargs:
+            stop: a function that accepts a node argument and
                 returns Boolean. Determines whether to interrupt 
                 the walk and return None.
             go: opposite of stop, a function that accepts a node
                 argument and returns Boolean. Determines whether
                 to keep going in a walk.
-                
-        Returns:
-            integer which corresponds to a Text-Fabric node
+            output: return output of the val_funct instead of the
+                node itself.
         """
         path = self.positions[:self.index]
         path.reverse()
-        stop = stop or (lambda n: False)
-        go = go or (lambda n: True)
-        return self.firstresult(path, val_funct, stop, go)
+        return self.firstresult(path, val_funct, **kwargs)
         
-    def firstresult(self, path, val_funct, stop, go):
-        """Return first node in a loop where val_funct(node) == True."""
+    def firstresult(self, path, val_funct, **kwargs):
+        """Return data on node in a loop.
+        
+        Args:
+            path: a set of nodes to traverse.
+            val_funct: a function that accepts a TF node argument
+                and returns Boolean. Determines which word to return
+                in the walk.
+                
+        *Kwargs:
+            stop: a function that accepts a node argument and
+                returns Boolean. Determines whether to interrupt 
+                the walk and return None.
+            go: opposite of stop, a function that accepts a node
+                argument and returns Boolean. Determines whether
+                to keep going in a walk.
+            output: return output of the val_funct instead of the
+                node itself.
+        """
+        stop = kwargs.get('stop') or (lambda n: False)
+        go = kwargs.get('go') or (lambda n: True)
         for node in path:
             # do matches
-            if val_funct(node):
-                return node
+            test = val_funct(node)
+            if test:
+                if not kwargs.get('output', False):
+                    return node
+                else:
+                    return test
             # do interrupts on go
             elif not go(node):
                 break
