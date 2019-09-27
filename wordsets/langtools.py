@@ -5,6 +5,15 @@ This module contains classes to be used
 with a Text-Fabric corpus instance.
 """
 
+class Dummy:
+    """A place-holder Class for use when supplied node is None"""
+    def __init__(self, *args, **kwargs):
+        pass
+    def __bool__(self):
+        return False
+    def __getattr__(self, name):
+        return lambda *args, **kwargs: None
+
 class Positions:
     """Access positions around a node in a context.
     
@@ -24,6 +33,7 @@ class Positions:
             order: The method of order to use for the search.
                 Options are "slot" or "node."
         """
+        
         self.tf = tf.api
         self.n = n
         self.method = order
@@ -164,12 +174,12 @@ class Walker:
             context: otype string of the supplied node's context to lookup
             tf: Running instance of Text-Fabric corpus
         """
-        tf = tf.api
-        thisotype = tf.F.otype.v(n) if n else ''
+        tf = tf.api      
+        thisotype = tf.F.otype.v(n)
         context = tf.L.u(n, context)[0]
         self.positions = list(tf.L.d(context, thisotype))
         self.index = self.positions.index(n)
-        
+
     def ahead(self, val_funct, **kwargs):
         """Walk ahead to node.
     
