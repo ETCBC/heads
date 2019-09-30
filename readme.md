@@ -4,9 +4,9 @@
 
 ## [See the production notebook](https://nbviewer.jupyter.org/github/ETCBC/heads/blob/master/phrase_heads.ipynb)
 
-## UPDATES July 2019
+## Updates October 2019
 
-Heads is being completely revamped with a new pipeline. The heads repository is now expanding in scope to cover word-level grammatical relationships. Those relationships will be detected and utilized to calculate semantic heads. The relationships will replace the reliance on the BHSA `subphrase` object and its `rela` features, which suffer from numerous inconsistencies and shortcomings.
+A new method for selecting heads, begun in July 2019 and seen in [going_subphraseless.ipynb](going_subphraseless.ipynb) is now being carried out in a separate repository ([here](https://github.com/CambridgeSemiticsLab/BH_time_collocations)). Eventually after that work has complete, I intend to transfer the methods used there to this repository. But for now I must continue the work under the rubric of my current PhD thesis. –30 Sept 2019, Cody Kingham  
 
 ## Features
 
