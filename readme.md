@@ -4,9 +4,15 @@
 
 ## [See the production notebook](https://nbviewer.jupyter.org/github/ETCBC/heads/blob/master/phrase_heads.ipynb)
 
-## Updates October 2019
+## Updates 
 
-A new method for selecting heads, begun in July 2019 and seen in [going_subphraseless.ipynb](going_subphraseless.ipynb) is now being carried out in a separate repository ([here](https://github.com/CambridgeSemiticsLab/BH_time_collocations)). Eventually after that work has complete, I intend to transfer the methods used there to this repository. But for now I must continue the work under the rubric of my current PhD thesis. –30 Sept 2019, Cody Kingham  
+### 2019-12-17
+
+The work of selecting heads most accurately will need to rely on a new data model. The data model is currently being updated by Constantijn Sikkel. In the update below from October, I noted the experimental work I have done in working without subphrases. That effort has had good success in modeling heads as part of a larger constructional context. In my Time Collocations project, I am modeling phrases as graphs of constructions, using NetworkX to represent to graphs. For the time being, the current method of heads selection as seen in [phrase_heads.ipynb](phrase_heads.ipynb) is the best option, though imperfect as it may be. While the method I am using in the Time Collocations project is successful, I have also learned that it is simply too hard to model phrase structure for all phrases without a dedicated project of its own. For that reason, I direct the user to await the new data model from the ETCBC, which intends to address all of the problems that I have worked to outline in this repository. 
+
+### 2019-09-30
+
+A new method for selecting heads, begun in July 2019 and seen in [going_subphraseless.ipynb](going_subphraseless.ipynb) is now being carried out in a separate repository ([here](https://github.com/CambridgeSemiticsLab/BH_time_collocations)). Eventually after that work has complete, I intend to transfer the methods used there to this repository. But for now I must continue the work under the rubric of my current PhD thesis. 
 
 ## Features
 
