@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/161826530.svg)](https://zenodo.org/badge/latestdoi/161826530)
 
-## [See the production notebook](https://nbviewer.jupyter.org/github/ETCBC/heads/blob/master/phrase_heads_simple.ipynb)
+## [See the production notebook](https://nbviewer.jupyter.org/github/ETCBC/heads/blob/master/generate_phrase_heads.ipynb)
 
 
 ## Features
