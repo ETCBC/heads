@@ -1,6 +1,6 @@
 # Heads
 
-[![DOI](https://zenodo.org/badge/161826530.svg)](https://zenodo.org/badge/latestdoi/161826530)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7945118.svg)](https://doi.org/10.5281/zenodo.7945118)
 
 ## [See the production notebook](https://nbviewer.jupyter.org/github/ETCBC/heads/blob/master/generate_phrase_heads.ipynb)
 
